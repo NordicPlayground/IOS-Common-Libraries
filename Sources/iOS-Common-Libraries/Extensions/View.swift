@@ -10,9 +10,9 @@ import SwiftUI
 // MARK: - FormIniOSListInMacOS
 
 #if os(iOS)
-typealias FormIniOSListInMacOS = Form
+public typealias FormIniOSListInMacOS = Form
 #elseif os(macOS)
-typealias FormIniOSListInMacOS = List
+public typealias FormIniOSListInMacOS = List
 #endif
 
 // MARK: - View
