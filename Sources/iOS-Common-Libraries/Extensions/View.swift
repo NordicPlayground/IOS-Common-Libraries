@@ -17,18 +17,18 @@ typealias FormIniOSListInMacOS = List
 
 // MARK: - View
 
-extension View {
+public extension View {
     
-    @inlinable public func frame(size: CGSize, alignment: Alignment = .center) -> some View {
+    @inlinable func frame(size: CGSize, alignment: Alignment = .center) -> some View {
         return frame(width: size.width, height: size.height, alignment: alignment)
     }
     
-    @inlinable public func centerTextInsideForm() -> some View {
+    @inlinable func centerTextInsideForm() -> some View {
         // Hack.
         return frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
     }
     
-    @inlinable public func withoutListRowInsets() -> some View {
+    @inlinable func withoutListRowInsets() -> some View {
         return listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
     
@@ -70,7 +70,7 @@ extension View {
 
 // MARK: - Picker
 
-extension Picker {
+public extension Picker {
     
     @ViewBuilder
     func setAsComboBoxStyle() -> some View {
@@ -91,7 +91,7 @@ extension Picker {
 
 // MARK: - NavigationView
 
-extension NavigationView {
+public extension NavigationView {
     
     func setSingleColumnNavigationViewStyle() -> some View {
         self

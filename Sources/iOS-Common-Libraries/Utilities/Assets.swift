@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - Assets
 
-enum Assets: String {
+public enum Assets: String {
     
     // MARK: - Colors
     

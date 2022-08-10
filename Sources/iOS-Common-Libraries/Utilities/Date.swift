@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
     
     static func currentYear() -> Int {
         guard let calendar = NSCalendar(calendarIdentifier: .gregorian) else {

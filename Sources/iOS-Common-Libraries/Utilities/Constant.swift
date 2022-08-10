@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Constant
 
-enum Constant {
+public enum Constant {
     
     // MARK: - Preview
     
