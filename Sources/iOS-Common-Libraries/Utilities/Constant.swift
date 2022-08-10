@@ -13,13 +13,13 @@ public enum Constant {
     
     // MARK: - Preview
     
-    static var isRunningInPreviewMode: Bool {
-        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    static public func isRunningInPreviewMode() -> Bool {
+        return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
     
     // MARK: - App
     
-    static let copyright: String = {
+    static public let copyright: String = {
         return "Copyright © \(Date.currentYear()) Nordic Semiconductor ASA"
     }()
 }

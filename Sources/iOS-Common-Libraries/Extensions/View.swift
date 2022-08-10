@@ -45,12 +45,12 @@ public extension View {
     // MARK: - NavigationView
     
     @ViewBuilder
-    func wrapInNavigationViewForiOS() -> some View {
+    func wrapInNavigationViewForiOS(with color: Color) -> some View {
         #if os(iOS)
         NavigationView {
             self
         }
-        .setupNavBarBackground()
+        .setupNavBarBackground(with: color)
         .setSingleColumnNavigationViewStyle()
         .accentColor(.white)
         #else
@@ -100,7 +100,7 @@ public extension NavigationView {
         #endif
     }
     
-     func setupNavBarBackground() -> NavigationView {
+    func setupNavBarBackground(with color: Color) -> NavigationView {
          #if os(iOS)
          let appearance = UINavigationBarAppearance()
          let attributes: [NSAttributedString.Key: Any] = [
@@ -108,7 +108,7 @@ public extension NavigationView {
          ]
          appearance.titleTextAttributes = attributes
          appearance.largeTitleTextAttributes = attributes
-         appearance.backgroundColor = Assets.navBarBackground.uiColor // Dynamic Color.
+         appearance.backgroundColor = color.uiColor // Dynamic Color.
          UINavigationBar.appearance().compactAppearance = appearance
          UINavigationBar.appearance().standardAppearance = appearance
          UINavigationBar.appearance().scrollEdgeAppearance = appearance
