@@ -84,6 +84,28 @@ public extension Color {
     
     // MARK: Other Color(s)
     
+    static var universalAccentColor: Color {
+        #if os(OSX)
+        return .accentColor
+        #elseif os(iOS)
+        return .nordicBlue
+        #endif
+    }
+    
+    static var positiveActionButtonColor: Color {
+        #if os(OSX)
+        return .primary
+        #elseif os(iOS)
+        return .nordicBlue
+        #endif
+    }
+    
+    static var negativeActionButtonColor: Color { .nordicRed }
+    
+    static var succcessfulActionButtonColor: Color { .nordicBlue }
+    
+    static var disabledTextColor: Color { .nordicMiddleGrey }
+    
     static var textFieldColor: Color {
         #if os(OSX)
         return Color.primary
