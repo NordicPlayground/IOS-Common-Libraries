@@ -10,7 +10,7 @@ import Combine
 
 // MARK: - sinkToKeyPath
 
-extension Publisher {
+public extension Publisher {
     
     func sink<Root>(to keyPath: ReferenceWritableKeyPath<Root, Output>, in root: Root, assigningInCaseOfError errorValue: Output) -> AnyCancellable {
         self.sink(receiveCompletion: { completion in
@@ -28,19 +28,19 @@ extension Publisher {
 
 // MARK: - onlyDecode
 
-extension Publisher {
+public extension Publisher {
     
     func onlyDecode<T: Codable>(type: T.Type) -> Publishers.OnlyDecode<Self, T> {
         return .init(upstream: self)
     }
 }
 
-extension Publishers {
+public extension Publishers {
     
     struct OnlyDecode<Upstream: Publisher, DecodedOutput: Codable>: Publisher where Upstream.Output == Data {
         
-        typealias Output = DecodedOutput
-        typealias Failure = Upstream.Failure
+        public typealias Output = DecodedOutput
+        public typealias Failure = Upstream.Failure
         
         private let upstream: Upstream
         private let decoder: JSONDecoder
@@ -50,7 +50,7 @@ extension Publishers {
             self.decoder = JSONDecoder()
         }
         
-        func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, DecodedOutput == S.Input {
+        public func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, DecodedOutput == S.Input {
             self.upstream
                 .compactMap { try? decoder.decode(DecodedOutput.self, from: $0) }
                 .subscribe(subscriber)
@@ -60,19 +60,19 @@ extension Publishers {
 
 // MARK: - gatherData
 
-extension Publisher {
+public extension Publisher {
     
     func gatherData<T: Codable>(ofType type: T.Type) -> Publishers.GatherData<Self, T> {
         return .init(upstream: self)
     }
 }
 
-extension Publishers {
+public extension Publishers {
     
     struct GatherData<Upstream: Publisher, DecodedOutput: Codable>: Publisher where Upstream.Output == Data {
         
-        typealias Output = DecodedOutput
-        typealias Failure = Upstream.Failure
+        public typealias Output = DecodedOutput
+        public typealias Failure = Upstream.Failure
         
         private let upstream: Upstream
         private let decoder: JSONDecoder
@@ -82,7 +82,7 @@ extension Publishers {
             self.decoder = JSONDecoder()
         }
         
-        func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, DecodedOutput == S.Input {
+        public func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, DecodedOutput == S.Input {
             self.upstream
                 .scan(Data(), { $0 + $1 })
                 .compactMap { try? decoder.decode(DecodedOutput.self, from: $0) }
@@ -93,23 +93,23 @@ extension Publishers {
 
 // MARK: - justDoIt()
 
-extension Publisher {
+public extension Publisher {
     
     func justDoIt(_ action: @escaping (Self.Output) -> Void) -> Publishers.JustDoIt<Self> {
         return .init(action: action, upstream: self)
     }
 }
 
-extension Publishers {
+public extension Publishers {
     
     struct JustDoIt<Upstream: Publisher>: Publisher {
-        typealias Output = Upstream.Output
-        typealias Failure = Upstream.Failure
+        public typealias Output = Upstream.Output
+        public typealias Failure = Upstream.Failure
         
         let action: (Output) -> Void
         let upstream: Upstream
         
-        func receive<S>(subscriber: S) where S : Subscriber, Upstream.Failure == S.Failure, Upstream.Output == S.Input {
+        public func receive<S>(subscriber: S) where S : Subscriber, Upstream.Failure == S.Failure, Upstream.Output == S.Input {
             upstream
                 .map { output in
                     action(output)
@@ -122,7 +122,7 @@ extension Publishers {
 
 // MARK: eraseToAnyVoidPublisher()
 
-extension Publisher {
+public extension Publisher {
     
     func eraseToAnyVoidPublisher() -> AnyPublisher<Void, Self.Failure> {
         self
