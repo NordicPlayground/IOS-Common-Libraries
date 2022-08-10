@@ -10,7 +10,7 @@ import Foundation
 #if DEBUG
 public enum Preview {
 
-    static func decode<T: Decodable>(filename: String) throws -> T? {
+    static public func decode<T: Decodable>(filename: String) throws -> T? {
         let path: String! = Bundle.main.path(forResource: filename, ofType: "json")
         let content: String! = try? String(contentsOfFile: path)
         let contentData: Data! = content.data(using: .utf8)
