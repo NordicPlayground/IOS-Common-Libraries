@@ -33,12 +33,12 @@ public enum Assets: String {
     case middleGrey = "NordicMiddleGrey"
     case darkGrey = "NordicDarkGrey"
     
-    var color: Color {
+    public var color: Color {
         Color(rawValue)
     }
     
     #if os(iOS)
-    var uiColor: UIColor! {
+    public var uiColor: UIColor! {
         UIColor(named: rawValue)
     }
     #endif
