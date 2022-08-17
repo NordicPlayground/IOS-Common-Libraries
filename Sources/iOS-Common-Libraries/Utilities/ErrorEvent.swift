@@ -10,14 +10,14 @@ import SwiftUI
 
 // MARK: - ErrorEvent
 
-struct ErrorEvent: Error, Identifiable, Hashable {
+public struct ErrorEvent: Error, Identifiable, Hashable {
     
     // MARK: Properties
     
-    let title: String
-    let localizedDescription: String
+    public let title: String
+    public let localizedDescription: String
     
-    var id: Int {
+    public var id: Int {
         hashValue
     }
     
@@ -34,7 +34,7 @@ struct ErrorEvent: Error, Identifiable, Hashable {
     
     // MARK: Hashable
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(localizedDescription)
     }
@@ -42,7 +42,7 @@ struct ErrorEvent: Error, Identifiable, Hashable {
 
 // MARK: - Alert Extension
 
-extension Alert {
+public extension Alert {
     
     init(errorEvent: ErrorEvent) {
         self.init(title: Text(errorEvent.title),
