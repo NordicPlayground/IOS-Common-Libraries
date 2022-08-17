@@ -23,11 +23,11 @@ public struct ErrorEvent: Error, Identifiable, Hashable {
     
     // MARK: Init
     
-    init(_ error: Error) {
+    public init(_ error: Error) {
         self.init(title: "Error", localizedDescription: error.localizedDescription)
     }
     
-    init(title: String, localizedDescription: String) {
+    public init(title: String, localizedDescription: String) {
         self.title = title
         self.localizedDescription = localizedDescription
     }
