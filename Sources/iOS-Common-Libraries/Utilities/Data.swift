@@ -15,8 +15,8 @@ public extension Data {
     
     struct HexEncodingOptions: OptionSet {
         
-        static let upperCase = HexEncodingOptions(rawValue: 1)
-        static let reverseEndianness = HexEncodingOptions(rawValue: 2)
+        public static let upperCase = HexEncodingOptions(rawValue: 1)
+        public static let reverseEndianness = HexEncodingOptions(rawValue: 2)
         
         public let rawValue: Int
         
