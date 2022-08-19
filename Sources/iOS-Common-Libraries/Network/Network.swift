@@ -13,11 +13,12 @@ import os
 
 // MARK: - Network
 
-public class Network {
+public final class Network {
     
     // MARK: - Properties
     
     private lazy var logger = Logger(Self.self)
+    private lazy var imageCache = Cache<URL, Image>()
     private lazy var session = URLSession(configuration: .multiPathEnabled)
     
     private var reachability: SCNetworkReachability?
@@ -137,6 +138,34 @@ public extension Network {
                 throw error
             }
             .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func downloadImage(for url: URL) -> AnyPublisher<Image?, Never> {
+        if let cachedImage = imageCache[url] {
+            return Just(cachedImage)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+
+        return session.dataTaskPublisher(for: url)
+            .map { response -> Image? in
+                let image: Image?
+                #if os(OSX)
+                guard let nsimage = NSImage(data: response.data) else { return nil }
+                image = Image(nsImage: nsimage)
+                #elseif os(iOS)
+                guard let uiimage = UIImage(data: response.data) else { return nil }
+                image = Image(uiImage: uiimage)
+                #endif
+                return image
+            }
+            .replaceError(with: nil)
+            .receive(on: DispatchQueue.main)
+            .map { [imageCache] image in
+                imageCache[url] = image
+                return image
+            }
             .eraseToAnyPublisher()
     }
 }
