@@ -23,7 +23,9 @@ public final class Network {
     
     private var reachability: SCNetworkReachability?
     
-    private init(_ host: String) {
+    // MARK: Public Init
+    
+    public init(_ host: String) {
         reachability = SCNetworkReachabilityCreateWithName(nil, host)
     }
 }
