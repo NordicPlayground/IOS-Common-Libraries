@@ -58,3 +58,11 @@ public enum HTTPMethod: String, RawRepresentable {
     
     case GET, POST, DELETE
 }
+
+// MARK: - HTTPResponse
+
+public protocol HTTPResponse: Codable {
+    
+    var success: Bool { get }
+    var error: String? { get }
+}
