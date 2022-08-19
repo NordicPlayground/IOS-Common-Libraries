@@ -15,10 +15,10 @@ public extension HTTPRequest {
     
     // MARK: - Init
     
-    init?<T: HTTPHost>(scheme: HTTPScheme = .https, host: T, path: String, parameters: [String: String]? = nil) {
+    init?(scheme: HTTPScheme = .https, host: String, path: String, parameters: [String: String]? = nil) {
         var components = URLComponents()
         components.scheme = scheme.rawValue
-        components.host = String(host)
+        components.host = host
         components.path = path
         components.queryItems = parameters?.map { key, value in
             URLQueryItem(name: key, value: value)
@@ -51,10 +51,6 @@ public enum HTTPScheme: String, RawRepresentable {
     
     case wss, https
 }
-
-// MARK: - Host
-
-public protocol HTTPHost: StringProtocol {}
 
 // MARK: - Method
 
