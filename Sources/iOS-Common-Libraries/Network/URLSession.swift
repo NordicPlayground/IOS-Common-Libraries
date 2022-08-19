@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - URLSessionConfiguration
 
-extension URLSessionConfiguration {
+public extension URLSessionConfiguration {
     
     static let multiPathEnabled: URLSessionConfiguration = {
         var multiPathEnabledConfiguration: URLSessionConfiguration = .default
