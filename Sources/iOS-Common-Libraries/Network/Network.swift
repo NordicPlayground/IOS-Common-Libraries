@@ -79,11 +79,12 @@ public extension Network {
                     throw URLError(.badServerResponse)
                 }
                 
-                if httpResponse.statusCode == 401 {
+                switch httpResponse.statusCode {
+                case 200...299: // Success.
+                    return element.data
+                case 401:
                     throw URLError(.userAuthenticationRequired)
-                }
-                
-                guard httpResponse.statusCode == 200 else {
+                default: // Assume Error.
                     if let responseDataAsString = String(data: element.data, encoding: .utf8) {
                         #if DEBUG
                         logger.debug("\(request): \(responseDataAsString)")
@@ -93,7 +94,6 @@ public extension Network {
                         throw URLError(.badServerResponse)
                     }
                 }
-                return element.data
             }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
