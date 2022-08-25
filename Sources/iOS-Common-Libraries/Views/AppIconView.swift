@@ -9,11 +9,11 @@ import SwiftUI
 
 // MARK: - AppIconView
 
-struct AppIconView: View {
+public struct AppIconView: View {
     
     private static let appCornerRadious = 4.0 as CGFloat
     
-    var body: some View {
+    public var body: some View {
         #if os(OSX)
         Image(nsImage: NSApplication.shared.applicationIconImage)
             .resizable()
@@ -32,7 +32,7 @@ struct AppIconView: View {
 // MARK: Icon
 
 #if os(iOS)
-fileprivate extension Bundle {
+internal extension Bundle {
     
     var iconFileName: String? {
         guard let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
