@@ -13,6 +13,12 @@ public struct AppIconView: View {
     
     private static let appCornerRadious = 4.0 as CGFloat
     
+    // MARK: Init
+    
+    public init() {}
+    
+    // MARK: View
+    
     public var body: some View {
         #if os(OSX)
         Image(nsImage: NSApplication.shared.applicationIconImage)
