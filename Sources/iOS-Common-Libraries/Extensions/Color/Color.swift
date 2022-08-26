@@ -2,10 +2,17 @@
 //  Color.swift
 //  iOS-Common-Libraries
 //
+//  Created by Nick Kibysh on 28/06/2022.
 //  Created by Dinesh Harjani on 10/8/22.
 //
 
 import SwiftUI
+
+#if os(macOS)
+public typealias SysColor = NSColor
+#elseif os(iOS)
+public typealias SysColor = UIColor
+#endif
 
 public extension Color {
 
@@ -15,6 +22,14 @@ public extension Color {
         self.init(red: Double(red) / Double(UInt8.max),
                   green: Double(green) / Double(UInt8.max),
                   blue: Double(blue) / Double(UInt8.max))
+    }
+    
+    init(rgba: RGBA) {
+        self.init(SysColor(rgba: rgba))
+    }
+    
+    init(light: RGBA, dark: RGBA) {
+        self.init(SysColor(light: light, dark: dark))
     }
     
     // MARK: uiColor
@@ -83,6 +98,10 @@ public extension Color {
     static let nordicDarkGrey = Color(red: 51, green: 63, blue: 72)
     
     // MARK: Other Color(s)
+    
+    static var navigationBarBackground: Color {
+        Color(light: 0x00a9ce, dark: RGBA(0x333F48))
+    }
     
     static var universalAccentColor: Color {
         #if os(OSX)
