@@ -13,7 +13,7 @@ import AppKit
 extension NSColor {
     
     public convenience init(rgba: RGBA) {
-        self.init(red: rgba.r, green: rgba.g, blue: rgba.b, alpha: rgba.a)
+        self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
     }
     
     public convenience init(light: RGBA, dark: RGBA) {
