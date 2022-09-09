@@ -28,10 +28,10 @@ public struct RGBA {
      Used by ´ExpressibleByIntegerLiteral´ protocol.
      */
     init(_ hex: Int, alpha: Double = 1) {
-        self.init(RGB(hex), alpha: alpha)
+        self.init(rgb: RGB(hex), alpha: alpha)
     }
     
-    init(_ rgb: RGB, alpha: Double = 1) {
+    init(rgb: RGB, alpha: Double = 1) {
         self.rgb = rgb
         self.alpha = alpha
     }
