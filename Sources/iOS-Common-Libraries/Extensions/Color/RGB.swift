@@ -31,7 +31,7 @@ extension RGB {
         self.init(red: redComponent, green: greenComponent, blue: blueComponent)
     }
     
-    init(_ hex: Int) {
+    init(hex: Int) {
         let redComponent = (hex & 0xff_00_00) / 0x1_00_00
         let greenComponent = (hex & 0xff_00) / 0x1_00
         let blueComponent = (hex & 0xff)
