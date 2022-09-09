@@ -5,12 +5,12 @@
 //  Created by Dinesh Harjani on 25/8/22.
 //
 
-#if os(iOS)
+#if os(iOS) || targetEnvironment(macCatalyst)
 import UIKit
 
 // MARK: - RGB
 
-extension UIColor {
+public extension UIColor {
     
     convenience init(red: Int, green: Int, blue: Int) {
         let rgb = RGB(red: red, green: green, blue: blue)
