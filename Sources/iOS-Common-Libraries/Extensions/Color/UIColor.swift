@@ -8,6 +8,27 @@
 #if os(iOS)
 import UIKit
 
+// MARK: - RGB
+
+extension UIColor {
+    
+    convenience init(red: Int, green: Int, blue: Int) {
+        let rgb = RGB(red: red, green: green, blue: blue)
+        self.init(rgb: rgb)
+    }
+
+    convenience init(rgb: RGB) {
+        self.init(red: rgb.red, green: rgb.green, blue: rgb.blue)
+    }
+    
+    var rgb: RGB {
+        guard let components = cgColor.components.map({ Int($0) }) else { return 0 }
+        return RGB(red: components[0], green: components[1], blue: components[2])
+    }
+}
+
+// MARK: - RGBA
+
 extension UIColor {
     
     public convenience init(rgba: RGBA) {
@@ -22,4 +43,5 @@ extension UIColor {
         }
     }
 }
+
 #endif

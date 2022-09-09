@@ -13,9 +13,9 @@ public struct RGBA {
 
     // MARK: Public Properties
     
-    public var red: Double { rgb.red }
-    public var green: Double { rgb.green }
-    public var blue: Double { rgb.blue }
+    public var red: Double { Double(rgb.red) / Double(RGB.RGBMAX) }
+    public var green: Double { Double(rgb.green) / Double(RGB.RGBMAX) }
+    public var blue: Double { Double(rgb.blue) / Double(RGB.RGBMAX) }
     public var alpha: Double
     
     // MARK: Private Properties
