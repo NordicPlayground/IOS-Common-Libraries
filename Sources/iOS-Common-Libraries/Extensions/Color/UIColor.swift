@@ -12,13 +12,11 @@ import UIKit
 
 public extension UIColor {
     
-    convenience init(red: Int, green: Int, blue: Int) {
-        let rgb = RGB(red: red, green: green, blue: blue)
-        self.init(rgb: rgb)
-    }
-
     convenience init(rgb: RGB) {
-        self.init(red: rgb.red, green: rgb.green, blue: rgb.blue)
+        self.init(red: CGFloat(rgb.red) / RGB.RGBMAXf,
+                  green: CGFloat(rgb.green) / RGB.RGBMAXf,
+                  blue: CGFloat(rgb.blue) / RGB.RGBMAXf,
+                  alpha: 1.0)
     }
     
     var rgb: RGB {
