@@ -15,9 +15,9 @@ import CoreGraphics
  
  Note that `Int` is the standard for Swift code, but it can be 32-bit or 64-bit depending on the platform.
  */
-typealias RGB = UInt32
+public typealias RGB = UInt32
 
-extension RGB {
+public extension RGB {
     
     static let RGBMAX: RGB = 255
     static let RGBMAXf = CGFloat(RGBMAX)
