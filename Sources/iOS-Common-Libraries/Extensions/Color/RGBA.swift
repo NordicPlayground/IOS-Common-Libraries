@@ -27,21 +27,21 @@ public struct RGBA {
     /**
      Used by ´ExpressibleByIntegerLiteral´ protocol.
      */
-    init(_ hex: Int, alpha: Double = 1) {
+    public init(_ hex: Int, alpha: Double = 1) {
         self.init(rgb: RGB(hex), alpha: alpha)
     }
     
-    init(rgb: RGB, alpha: Double = 1) {
+    public init(rgb: RGB, alpha: Double = 1) {
         self.rgb = rgb
         self.alpha = alpha
     }
 
-    init(red: Double, green: Double, blue: Double, alpha: Double = 1) {
+    public init(red: Double, green: Double, blue: Double, alpha: Double = 1) {
         self.rgb = RGB(red: red, green: green, blue: blue)
         self.alpha = alpha
     }
 
-    init(red: UInt8, green: UInt8, blue: UInt8, alpha: Double = 1) {
+    public init(red: UInt8, green: UInt8, blue: UInt8, alpha: Double = 1) {
         self.rgb = RGB(red: red, green: green, blue: blue)
         self.alpha = alpha
     }
