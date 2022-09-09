@@ -22,7 +22,7 @@ extension UIColor {
     }
     
     var rgb: RGB {
-        guard let components = cgColor.components.map({ Int($0) }) else { return 0 }
+        guard let components = cgColor.components else { return 0 }
         return RGB(red: components[0], green: components[1], blue: components[2])
     }
 }
