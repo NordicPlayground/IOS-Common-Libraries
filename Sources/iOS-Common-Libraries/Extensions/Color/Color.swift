@@ -18,18 +18,18 @@ public extension Color {
 
     // MARK: Init
     
-    init(red: UInt8, green: UInt8, blue: UInt8) {
-        self.init(red: Double(red) / Double(UInt8.max),
-                  green: Double(green) / Double(UInt8.max),
-                  blue: Double(blue) / Double(UInt8.max))
-    }
-    
     init(rgba: RGBA) {
         self.init(SysColor(rgba: rgba))
     }
     
     init(light: RGBA, dark: RGBA) {
         self.init(SysColor(light: light, dark: dark))
+    }
+    
+    init(red: UInt8, green: UInt8, blue: UInt8) {
+        self.init(red: Double(red) / Double(UInt8.max),
+                  green: Double(green) / Double(UInt8.max),
+                  blue: Double(blue) / Double(UInt8.max))
     }
     
     // MARK: uiColor
