@@ -160,6 +160,6 @@ public extension Color {
         #endif
     }
     
-    static let nordicLabel: Color = .primary
+    static let nordicLabel: Color = .textFieldColor
     static let nordicDisabledLabel: Color = .secondary
 }
