@@ -141,6 +141,9 @@ public extension Color {
         #endif
     }
     
+    static let nordicForeground: Color = .gray
+    static let nordicBackground: Color = .secondarySystemGroupBackground
+    
     static var secondarySystemBackground: Color {
         #if os(OSX)
         return Color(.controlBackgroundColor)
@@ -156,4 +159,7 @@ public extension Color {
         return Color(UIColor.secondarySystemGroupedBackground)
         #endif
     }
+    
+    static let nordicLabel: Color = .primary
+    static let nordicDisabledLabel: Color = .secondary
 }
