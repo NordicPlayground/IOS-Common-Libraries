@@ -159,7 +159,7 @@ public extension Color {
     
     static let nordicLabel: Color = {
         #if os(iOS) || targetEnvironment(macCatalyst)
-        return .primary
+        return .black
         #else
         return Color(NSColor.labelColor)
         #endif
