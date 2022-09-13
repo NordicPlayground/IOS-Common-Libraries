@@ -156,12 +156,4 @@ public extension Color {
         return Color(UIColor.secondarySystemGroupedBackground)
         #endif
     }
-    
-    static let nordicLabel: Color = {
-        #if os(iOS) || targetEnvironment(macCatalyst)
-        return .black
-        #else
-        return Color(NSColor.labelColor)
-        #endif
-    }()
 }
