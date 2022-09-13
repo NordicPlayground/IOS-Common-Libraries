@@ -156,4 +156,12 @@ public extension Color {
         return Color(UIColor.secondarySystemGroupedBackground)
         #endif
     }
+    
+    static let nordicLabel: Color = {
+        #if os(OSX)
+        return Color(NSColor.labelColor)
+        #elseif os(iOS)
+        return Color(UIColor.label)
+        #endif
+    }()
 }
