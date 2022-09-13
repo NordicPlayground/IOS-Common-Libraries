@@ -46,8 +46,8 @@ extension UIColor {
 
 extension UIColor {
     
-    static let nordicLabel: UIColor = .label
-    static let nordicDisabledLabel: UIColor = .secondaryLabel
+    public static let nordicLabel: UIColor = .label
+    public static let nordicDisabledLabel: UIColor = .secondaryLabel
 }
 
 #endif
