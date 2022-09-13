@@ -42,4 +42,12 @@ extension UIColor {
     }
 }
 
+// MARK: - Colors
+
+extension UIColor {
+    
+    static let nordicLabel: UIColor = .label
+    static let nordicDisabledLabel: UIColor = .secondaryLabel
+}
+
 #endif
