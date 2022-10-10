@@ -28,7 +28,10 @@ public struct AppIconView: View {
         #elseif os(iOS)
         Bundle.main.iconFileName
             .flatMap { UIImage(named: $0) }
-            .map { Image(uiImage: $0) }
+            .map {
+                Image(uiImage: $0)
+                    .resizable()
+            }
             .aspectRatio(contentMode: .fit)
             .cornerRadius(AppIconView.appCornerRadious)
         #endif
