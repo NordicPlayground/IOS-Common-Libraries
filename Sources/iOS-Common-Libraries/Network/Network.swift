@@ -17,7 +17,7 @@ public final class Network {
     
     // MARK: - Properties
     
-    private lazy var logger = Logger(Self.self)
+    private lazy var logger = L(Self.self)
     private lazy var imageCache = Cache<URL, Image>()
     private lazy var session = URLSession(configuration: .multiPathEnabled)
     
@@ -50,7 +50,7 @@ public extension Network {
     
     func isReachable() -> Bool {
         guard let reachability = reachability else {
-            logger.error("\(#function): Nil reachability property.")
+            logger.e("\(#function): Nil reachability property.")
             return false
         }
         
@@ -62,7 +62,7 @@ public extension Network {
         let canConnectAutomatically = flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic)
         let canConnectWithoutIntervention = canConnectAutomatically && !flags.contains(.interventionRequired)
         let result = isReachable && (!connectionRequired || canConnectWithoutIntervention)
-        logger.debug("\(#function): \(result)")
+        logger.d("\(#function): \(result)")
         return isReachable && (!connectionRequired || canConnectWithoutIntervention)
     }
     
@@ -72,7 +72,7 @@ public extension Network {
         let sessionRequestPublisher = session.dataTaskPublisher(for: request)
             .tryMap() { [logger] element -> Data in
                 #if DEBUG
-                logger.debug("\(element.response)")
+                logger.d("\(element.response)")
                 #endif
                 
                 guard let httpResponse = element.response as? HTTPURLResponse else {
@@ -87,7 +87,7 @@ public extension Network {
                 default: // Assume Error.
                     if let responseDataAsString = String(data: element.data, encoding: .utf8) {
                         #if DEBUG
-                        logger.debug("\(request): \(responseDataAsString)")
+                        logger.d("\(request): \(responseDataAsString)")
                         #endif
                         throw URLError(.cannotParseResponse)
                     } else {

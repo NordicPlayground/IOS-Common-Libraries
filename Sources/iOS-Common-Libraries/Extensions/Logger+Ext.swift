@@ -8,8 +8,7 @@
 import Foundation
 import os
 
-extension Logger {
-   
+extension L {
     static let iOSCommonLibrarySubsystem = "com.nordicsemi.iOS-Common-Libraries"
     
     // MARK: - Init
@@ -19,6 +18,6 @@ extension Logger {
     }
     
     init(category: String) {
-        self.init(subsystem: Logger.iOSCommonLibrarySubsystem, category: category)
+        self.init(subsystem: L.iOSCommonLibrarySubsystem, category: category)
     }
 }

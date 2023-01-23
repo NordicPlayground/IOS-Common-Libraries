@@ -35,6 +35,7 @@ public extension Color {
     // MARK: uiColor
     
     #if os(iOS) || targetEnvironment(macCatalyst)
+    @available(iOS 14.0, *)
     var uiColor: UIColor {
         UIColor(self)
     }
