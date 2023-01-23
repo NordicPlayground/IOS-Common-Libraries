@@ -167,10 +167,10 @@ extension Logger: LoggMessageProtocol {
     }
 }
 
-struct L {
+public struct L {
     private let logger: LoggMessageProtocol
     
-    init(subsystem: String, category: String) {
+    public init(subsystem: String, category: String) {
         if #available(iOS 14.0, *) {
             logger = Logger(subsystem: subsystem, category: category)
         } else {
