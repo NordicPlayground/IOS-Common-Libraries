@@ -154,7 +154,6 @@ extension Logger: LoggMessageProtocol {
         } else {
             fault("\(message)")
         }
-        
     }
     
     func c(_ message: String, isPublic: Bool) {
@@ -178,35 +177,35 @@ public struct L {
         }
     }
     
-    func n(_ message: String, isPublic: Bool = false) {
+    public func n(_ message: String, isPublic: Bool = false) {
         logger.n(message, isPublic: isPublic)
     }
     
-    func d(_ message: String, isPublic: Bool = false) {
+    public func d(_ message: String, isPublic: Bool = false) {
         logger.d(message, isPublic: isPublic)
     }
     
-    func t(_ message: String, isPublic: Bool = false) {
+    public func t(_ message: String, isPublic: Bool = false) {
         logger.t(message, isPublic: isPublic)
     }
     
-    func i(_ message: String, isPublic: Bool = false) {
+    public func i(_ message: String, isPublic: Bool = false) {
         logger.i(message, isPublic: isPublic)
     }
     
-    func e(_ message: String, isPublic: Bool = false) {
+    public func e(_ message: String, isPublic: Bool = false) {
         logger.e(message, isPublic: isPublic)
     }
     
-    func w(_ message: String, isPublic: Bool = false) {
+    public func w(_ message: String, isPublic: Bool = false) {
         logger.w(message, isPublic: isPublic)
     }
     
-    func f(_ message: String, isPublic: Bool = false) {
+    public func f(_ message: String, isPublic: Bool = false) {
         logger.f(message, isPublic: isPublic)
     }
     
-    func c(_ message: String, isPublic: Bool = false) {
+    public func c(_ message: String, isPublic: Bool = false) {
         logger.c(message, isPublic: isPublic)
     }
 }
