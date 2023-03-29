@@ -25,7 +25,7 @@ public struct AppIconView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .cornerRadius(AppIconView.appCornerRadious)
-        #elseif os(iOS)
+        #elseif os(iOS) || targetEnvironment(macCatalyst)
         Bundle.main.iconFileName
             .flatMap { UIImage(named: $0) }
             .map {
@@ -40,16 +40,19 @@ public struct AppIconView: View {
 
 // MARK: Icon
 
-#if os(iOS)
+#if os(iOS) || targetEnvironment(macCatalyst)
 internal extension Bundle {
     
     var iconFileName: String? {
-        guard let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
-              let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-              let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-              let iconFileName = iconFiles.last
-        else { return nil }
-        return iconFileName
+        if let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
+           let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+           let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+           let iconFileName = iconFiles.last {
+            return iconFileName
+        } else if let bundleAppIcon = infoDictionary?["CFBundleIconFile"] as? String {
+            return bundleAppIcon
+        }
+        return nil
     }
 }
 #endif
