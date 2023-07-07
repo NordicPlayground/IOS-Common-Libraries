@@ -15,7 +15,7 @@ public struct ContentUnavailableConfiguration {
         public var action: () -> Void
         public var style: any ButtonStyle
         
-        init(title: any StringProtocol, style: any ButtonStyle = NordicPrimary(), action: @escaping () -> Void) {
+        public init(title: any StringProtocol, style: any ButtonStyle = NordicPrimary(), action: @escaping () -> Void) {
             self.title = title
             self.action = action
             self.style = style
@@ -32,7 +32,7 @@ public struct ContentUnavailableConfiguration {
     
     public var imageForegroundColor: Color
     
-    init(text: String? = nil, secondaryText: String? = nil, image: Image? = nil, buttonConfiguration: ButtonConfiguration? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
+    public init(text: String? = nil, secondaryText: String? = nil, image: Image? = nil, buttonConfiguration: ButtonConfiguration? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
         self.text = text
         self.secondaryText = secondaryText
         self.image = image
@@ -42,7 +42,7 @@ public struct ContentUnavailableConfiguration {
         self.imageForegroundColor = imageForegroundColor
     }
     
-    init(text: String? = nil, secondaryText: String? = nil, systemName: String? = nil, buttonConfiguration: ButtonConfiguration? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
+    public init(text: String? = nil, secondaryText: String? = nil, systemName: String? = nil, buttonConfiguration: ButtonConfiguration? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
         let image = systemName.map { Image(systemName: $0) }
         self.init(text: text, secondaryText: secondaryText, image: image, buttonConfiguration: buttonConfiguration, imageWidth: imageWidth, imageHeight: imageHeight, imageForegroundColor: imageForegroundColor)
     }

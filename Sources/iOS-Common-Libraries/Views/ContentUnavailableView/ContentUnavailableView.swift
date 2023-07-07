@@ -8,11 +8,15 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct ContentUnavailableView: View {
-    let configuration: ContentUnavailableConfiguration
+public struct ContentUnavailableView: View {
+    public let configuration: ContentUnavailableConfiguration
     
-    var body: some View {
-        VStack {
+    public init(configuration: ContentUnavailableConfiguration) {
+        self.configuration = configuration
+    }
+    
+    public var body: some View {
+        VStack(alignment: .center) {
             configuration.image?
                 .resizable()
                 .aspectRatio(contentMode: .fit)
