@@ -25,17 +25,23 @@ public struct ContentUnavailableView: View {
                 .foregroundColor(configuration.imageForegroundColor)
             
             configuration.text.map {
-                Text($0).font(.title)
+                Text($0)
+                    .multilineTextAlignment(.center)
+                    .font(.title)
             }
             
             configuration.secondaryText.map {
-                Text($0).foregroundColor(.secondary)
+                Text($0)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                    
             }
             
             configuration.buttonConfiguration.map { config in
                 Button(config.title, action: config.action)
                     // TODO: Use `buttonStyle` from `config`
                     .buttonStyle(NordicPrimary())
+                    .frame(maxWidth: 250)
             }
         }
     }
