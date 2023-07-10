@@ -22,6 +22,7 @@ extension Array {
         return newArray
     }
     
+    @discardableResult
     mutating public func replacedOrAppended(_ newElement: Element, firstWhere closure: (Element) -> Bool) -> Bool {
         for e in self.enumerated() {
             if closure(e.element) {
@@ -50,6 +51,7 @@ extension Array where Element: Equatable {
         return newArray
     }
     
+    @discardableResult
     mutating public func replacedOrAppended(_ newElement: Element) -> Bool {
         for e in self.enumerated() {
             if e.element == newElement {
@@ -78,6 +80,7 @@ extension Array {
         return newArray
     }
     
+    @discardableResult
     mutating public func replacedOrAppended<V: Equatable>(_ newElement: Element, compareBy keyPath: KeyPath<Element, V>) -> Bool {
         for e in self.enumerated() {
             if e.element[keyPath: keyPath] == newElement[keyPath: keyPath] {
