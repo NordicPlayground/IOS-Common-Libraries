@@ -8,7 +8,7 @@
 import Foundation
 
 #if DEBUG
-public enum Preview {
+public enum FilePreview {
 
     static public func decode<T: Decodable>(filename: String) throws -> T? {
         let path: String! = Bundle.main.path(forResource: filename, ofType: "json")
