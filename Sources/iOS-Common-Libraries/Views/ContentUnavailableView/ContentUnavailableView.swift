@@ -8,11 +8,13 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-public struct ContentUnavailableView: View {
+public struct ContentUnavailableView<Action: View>: View {
     public let configuration: ContentUnavailableConfiguration
+    let actions: (() -> Action)
     
-    public init(configuration: ContentUnavailableConfiguration) {
+    public init(configuration: ContentUnavailableConfiguration, actions: @escaping () -> Action = { EmptyView() }) {
         self.configuration = configuration
+        self.actions = actions
     }
     
     public var body: some View {
@@ -37,12 +39,8 @@ public struct ContentUnavailableView: View {
                     
             }
             
-            configuration.buttonConfiguration.map { config in
-                Button(config.title, action: config.action)
-                    // TODO: Use `buttonStyle` from `config`
-                    .buttonStyle(NordicPrimary())
-                    .frame(maxWidth: 250)
-            }
+            actions()
+                .frame(maxWidth: 300)
         }
     }
 }
@@ -55,14 +53,12 @@ struct ContentUnavailableView_Previews: PreviewProvider {
                 ContentUnavailableConfiguration(
                     text: "No Devices",
                     secondaryText: "Start Scon",
-                    systemName: "binoculars",
-                    buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
-                        title: "Button",
-                        style: NordicSecondary(),
-                        action: {
+                    systemName: "binoculars"
+                )) {
+                    Button("Action") {
                         
-                    })
-                )
-        )
+                    }
+                    .buttonStyle(NordicPrimary())
+                }
     }
 }
