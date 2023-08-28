@@ -34,6 +34,7 @@ public extension View {
     
     // MARK: - NavBar
     
+    @available(iOS 14.0, *)
     func setTitle(_ title: String) -> some View {
         #if os(iOS)
         return navigationBarTitle(title, displayMode: .inline)
@@ -44,6 +45,7 @@ public extension View {
     
     // MARK: - NavigationView
     
+    @available(iOS 14.0, *)
     @ViewBuilder
     func wrapInNavigationViewForiOS(with color: Color) -> some View {
         #if os(iOS)
@@ -72,6 +74,7 @@ public extension View {
 
 public extension Picker {
     
+    @available(iOS 14.0, *)
     @ViewBuilder
     func setAsComboBoxStyle() -> some View {
         self
@@ -100,6 +103,7 @@ public extension NavigationView {
         #endif
     }
     
+    @available(iOS 14.0, *)
     func setupNavBarBackground(with color: Color) -> NavigationView {
          #if os(iOS)
          let appearance = UINavigationBarAppearance()
