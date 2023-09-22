@@ -3,11 +3,31 @@
 //  
 //
 //  Created by Dinesh Harjani on 18/8/22.
+//  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
 import Foundation
 
-// MARK: - Data Extension
+// MARK: - Byte Handling
+
+public extension Data {
+    
+    func canRead<T: FixedWidthInteger>(_ dataType: T.Type, atOffset offset: Int) -> Bool {
+        return offset + MemoryLayout<T>.size <= count
+    }
+    
+    func littleEndianBytes<T: FixedWidthInteger>(atOffset offset: Int = 0, as: T.Type) -> Int {
+        let byteLength = MemoryLayout<T>.size
+        return subdata(in: offset ..< offset + byteLength).withUnsafeBytes { Int($0.load(as: T.self)) }
+    }
+
+    func bigEndianBytes<T: FixedWidthInteger>(atOffset offset: Int = 0, as: T.Type) -> Int {
+        let byteLength = MemoryLayout<T>.size
+        return subdata(in: offset ..< offset + byteLength).withUnsafeBytes { Int(T(bigEndian: $0.load(as: T.self))) }
+    }
+}
+
+// MARK: - Hex Encoding
 
 public extension Data {
     
