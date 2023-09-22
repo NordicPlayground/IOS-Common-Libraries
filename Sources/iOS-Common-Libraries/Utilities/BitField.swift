@@ -17,7 +17,7 @@ public struct BitField<T: Option>: Hashable, Codable, ExpressibleByArrayLiteral 
     
     // MARK: all()
     
-    static func all() -> Self {
+    public static func all() -> Self {
         return BitField<T>(T.allCases.map { $0 })
     }
     
