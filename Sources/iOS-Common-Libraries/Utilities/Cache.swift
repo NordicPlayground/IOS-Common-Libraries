@@ -14,6 +14,8 @@ public final class Cache<Key: Hashable, Value> {
     
     private let wrapped = NSCache<WrappedKey, Entry>()
     
+    public init() {}
+    
     // MARK: - Subscript API
     
     public subscript(key: Key) -> Value? {
