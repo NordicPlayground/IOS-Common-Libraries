@@ -10,13 +10,13 @@ import Foundation
 /**
  - Source: [Swift by Sundell](https://www.swiftbysundell.com/articles/caching-in-swift/)
  */
-final class Cache<Key: Hashable, Value> {
+public final class Cache<Key: Hashable, Value> {
     
     private let wrapped = NSCache<WrappedKey, Entry>()
     
     // MARK: - Subscript API
     
-    subscript(key: Key) -> Value? {
+    public subscript(key: Key) -> Value? {
         get {
             let wrappedKey = WrappedKey(key)
             return wrapped.object(forKey: wrappedKey)?.value
@@ -31,6 +31,14 @@ final class Cache<Key: Hashable, Value> {
             }
             wrapped.setObject(Entry(value: value), forKey: wrappedKey)
         }
+    }
+    
+    public func removeValue(forKey key: Key) {
+        wrapped.removeObject(forKey: WrappedKey(key))
+    }
+
+    public func clear() {
+        wrapped.removeAllObjects()
     }
 }
 
