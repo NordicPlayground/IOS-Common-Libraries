@@ -19,7 +19,7 @@ public enum RSSI: Int, Equatable, CaseIterable {
     case ok
     case good
     
-    var color: Color {
+    public var color: Color {
         switch self {
         case .good, .practicalBest:
             return .green
@@ -34,7 +34,7 @@ public enum RSSI: Int, Equatable, CaseIterable {
         }
     }
     
-    var numberOfBars: Int {
+    public var numberOfBars: Int {
         switch self {
         case .good, .practicalBest:
             return 4
