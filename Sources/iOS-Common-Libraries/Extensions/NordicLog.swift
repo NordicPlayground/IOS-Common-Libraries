@@ -30,7 +30,7 @@ public struct NordicLog {
     // MARK: - Init
     
     public init(_ clazz: AnyClass, subsystem: String, delegate: Delegate? = nil) {
-        self.init(category: String(describing: clazz), subsystem: subsystem)
+        self.init(category: String(describing: clazz), subsystem: subsystem, delegate: delegate)
     }
 
     public init(category: String, subsystem: String, delegate: Delegate? = nil) {
