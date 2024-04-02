@@ -17,7 +17,7 @@ public final class Network {
     
     // MARK: - Properties
     
-    private lazy var logger = Logger(Self.self)
+    private lazy var logger = NordicLog(Self.self, subsystem: NordicLog.iOSCommonLibrarySubsystem)
     private lazy var imageCache = Cache<URL, Image>()
     private lazy var session = URLSession(configuration: .multiPathEnabled)
     
