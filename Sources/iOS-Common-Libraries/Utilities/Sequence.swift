@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Sequence {
+public extension Sequence {
     
     func filter<T: Equatable>(where keyPath: KeyPath<Element, T>, isEqualsTo includedValue: T) -> [Self.Element] {
         return filter { $0[keyPath: keyPath] == includedValue }
