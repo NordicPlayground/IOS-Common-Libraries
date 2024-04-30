@@ -3,6 +3,9 @@
 
 This is a Swift Package containing Swift code and Utilities/Assets, such as Colors, used by Nordic's iOS/Mac apps.
 
+> [!IMPORTANT]  
+> This repository contains APIs and Utilities used by ourselves. Ones that we find useful to extend to the community, because most of it we've learned through you, so we owe it back to you. That being said, this repository should not be considered public-facing API. We reserve the right to modify any of the components shared here to fit our uses.
+
 ## Contents
 
 ### Utilities
