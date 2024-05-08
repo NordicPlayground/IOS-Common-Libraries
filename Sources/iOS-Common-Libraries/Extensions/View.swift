@@ -35,6 +35,12 @@ public extension View {
         return listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
     
+    // MARK: setAccent
+    
+    @inlinable func setAccent(_ color: Color) -> some View {
+        return accentColor(color)
+    }
+    
     // MARK: - NavBar
     
     func setTitle(_ title: String) -> some View {
