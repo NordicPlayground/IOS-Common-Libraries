@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - Accented
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
-struct AccentedLabeledContentStyle: LabeledContentStyle {
+public struct AccentedLabeledContentStyle: LabeledContentStyle {
     
     // MARK: Private Properties
     
@@ -41,7 +41,7 @@ struct AccentedLabeledContentStyle: LabeledContentStyle {
     // MARK: Body
     
     @ViewBuilder
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         if lineLimit < 1 {
             LabeledContent {
                 configuration.content
@@ -72,7 +72,7 @@ struct AccentedLabeledContentStyle: LabeledContentStyle {
 // MARK: - LabeledContentStyle
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
-extension LabeledContentStyle where Self == AccentedLabeledContentStyle {
+public extension LabeledContentStyle where Self == AccentedLabeledContentStyle {
     
     static var accented: AccentedLabeledContentStyle { .init() }
     
