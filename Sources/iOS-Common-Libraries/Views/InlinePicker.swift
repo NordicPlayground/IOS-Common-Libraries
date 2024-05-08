@@ -25,7 +25,7 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
     
     // MARK: Init
     
-    init(title: String, selectedValue: Binding<T>, possibleValues: [T], onChange: OnChange? = nil) {
+    public init(title: String, selectedValue: Binding<T>, possibleValues: [T], onChange: OnChange? = nil) {
         self.title = title
         self.selectedValue = selectedValue
         self.possibleValues = possibleValues
