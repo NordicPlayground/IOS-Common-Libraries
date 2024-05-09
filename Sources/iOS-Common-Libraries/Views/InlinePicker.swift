@@ -50,3 +50,14 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
         .labeledContentStyle(.accented(lineLimit: 0))
     }
 }
+
+// MARK: - CaseIterable
+
+@available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+public extension InlinePicker where T: CaseIterable, T.AllCases == [T] {
+    
+    init(title: String, selectedValue: Binding<T>, onChange: InlinePicker.OnChange? = nil) {
+        self.init(title: title, selectedValue: selectedValue, possibleValues: T.allCases, 
+                  onChange: onChange)
+    }
+}
