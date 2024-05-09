@@ -19,14 +19,17 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
     // MARK: Properties
     
     private let title: String
+    private let systemImage: String?
     private let selectedValue: Binding<T>
     private let possibleValues: [T]
     private let onChange: OnChange?
     
     // MARK: Init
     
-    public init(title: String, selectedValue: Binding<T>, possibleValues: [T], onChange: OnChange? = nil) {
+    public init(title: String, systemImage: String? = nil, selectedValue: Binding<T>,
+                possibleValues: [T], onChange: OnChange? = nil) {
         self.title = title
+        self.systemImage = systemImage
         self.selectedValue = selectedValue
         self.possibleValues = possibleValues
         self.onChange = onChange
@@ -35,7 +38,7 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
     // MARK: View
     
     public var body: some View {
-        LabeledContent(title) {
+        LabeledContent {
             Picker("", selection: selectedValue) {
                 ForEach(possibleValues, id: \.self) { value in
                     Text((value as? CustomDebugStringConvertible)?.debugDescription ?? (value as? CustomStringConvertible).nilDescription)
@@ -46,6 +49,12 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
                 onChange?(newValue)
             })
             .pickerStyle(.menu)
+        } label: {
+            if let systemImage {
+                Label(title, systemImage: systemImage)
+            } else {
+                Text(title)
+            }
         }
         .labeledContentStyle(.accented(lineLimit: 0))
     }
@@ -56,8 +65,9 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
 public extension InlinePicker where T: CaseIterable, T.AllCases == [T] {
     
-    init(title: String, selectedValue: Binding<T>, onChange: InlinePicker.OnChange? = nil) {
-        self.init(title: title, selectedValue: selectedValue, possibleValues: T.allCases, 
-                  onChange: onChange)
+    init(title: String, systemImage: String? = nil, selectedValue: Binding<T>, 
+         onChange: InlinePicker.OnChange? = nil) {
+        self.init(title: title, systemImage: systemImage, selectedValue: selectedValue,
+                  possibleValues: T.allCases, onChange: onChange)
     }
 }
