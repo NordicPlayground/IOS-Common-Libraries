@@ -16,12 +16,14 @@ public struct AccentedLabeledContentStyle: LabeledContentStyle {
     
     // MARK: Private Properties
     
+    private let accentColor: Color
     private let labelFont: Font?
     private let lineLimit: Int
     
     // MARK: Init
     
-    init(labelFont: Font? = nil, lineLimit: Int = 1) {
+    init(accentColor: Color = Color.universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) {
+        self.accentColor = accentColor
         self.labelFont = labelFont
         self.lineLimit = lineLimit
     }
@@ -46,8 +48,8 @@ public struct AccentedLabeledContentStyle: LabeledContentStyle {
             LabeledContent {
                 configuration.content
                     .font(labelFont)
-                    .setAccent(Color.universalAccentColor)
-                    .foregroundColor(Color.universalAccentColor)
+                    .setAccent(accentColor)
+                    .foregroundColor(accentColor)
             } label: {
                 configuration.label
                     .font(labelFont)
@@ -57,8 +59,8 @@ public struct AccentedLabeledContentStyle: LabeledContentStyle {
             LabeledContent {
                 configuration.content
                     .font(labelFont)
-                    .setAccent(.universalAccentColor)
-                    .foregroundColor(.universalAccentColor)
+                    .setAccent(accentColor)
+                    .foregroundColor(accentColor)
             } label: {
                 configuration.label
                     .font(labelFont)
@@ -76,7 +78,7 @@ public extension LabeledContentStyle where Self == AccentedLabeledContentStyle {
     
     static var accented: AccentedLabeledContentStyle { .init() }
     
-    static func accented(labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedLabeledContentStyle {
-        AccentedLabeledContentStyle(labelFont: labelFont, lineLimit: lineLimit)
+    static func accented(accentColor: Color = .universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedLabeledContentStyle {
+        AccentedLabeledContentStyle(accentColor: accentColor, labelFont: labelFont, lineLimit: lineLimit)
     }
 }
