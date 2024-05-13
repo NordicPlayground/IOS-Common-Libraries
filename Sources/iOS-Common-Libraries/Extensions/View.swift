@@ -22,6 +22,11 @@ public extension View {
     
     // MARK: frame
     
+    @inlinable func centered() -> some View {
+        // Hack.
+        return frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+    }
+    
     @inlinable func frame(size: CGSize, alignment: Alignment = .center) -> some View {
         return frame(width: size.width, height: size.height, alignment: alignment)
     }
