@@ -8,14 +8,21 @@ This is a Swift Package containing Swift code and Utilities/Assets, such as Colo
 
 ## Contents
 
+### Colors
+
+The swatch of Nordic colors is available here for our own use. We're keeping to the [DRY Principle](https://wiki.c2.com/?DontRepeatYourself) of course, but the side-benefit of this is that updating the colors in one place, automagically updates all of our apps.
+
+Additionally, there are helper items here. We have `struct RGB` and `RGBA` structures so that 8-bit colors can be stored as a `UInt32` and thus helping memory consumption.
+
 ### Utilities
 
 - `Cache`: Need to use `NSCache` with a pure-Swift `struct`? This is what this is for. Also, it's just John Sundell's work in a library that we use.
-- `BitField`: Alternative to an `enum` `Set` that allows us to store everything in a single CPU Register, both in memory and as a `Codable`. Heavily used by [nRF Connect for Mobile](https://apps.apple.com/es/app/nrf-connect-for-mobile/id1054362403).
+- `BitField`: Alternative to an `enum` `Set` that allows us to store everything in a single CPU Register, both in memory and as a `Codable`.
+- `NordicLog`: Apple added `OSLog` as the [performance-oriented logging API](https://developer.apple.com/documentation/os/oslog) for their platforms back in 2018. We've since adopted it in nRF Connect for Mobile, and extended its use accross all apps. And what we found is that, we kept re-implementing the same set of APIs for logging everywhere. So we picked one implementation, and moved it here so that we can use it everywhere. Additionally, it supports not only OSLog APIs but also [performance-logging APIs](https://developer.apple.com/documentation/os/logging/recording_performance_data), allowing us to measure calls for performance.
 
 ### Extensions
 
-- `Data`: There are helper functions here to handle bytes within a `Data` blob. Again, this is code used by [nRF Connect for Mobile](https://apps.apple.com/es/app/nrf-connect-for-mobile/id1054362403) to read individual bytes from advertised BLE `Data`. The are functions to format `Data` as `String` as well.
+- `Data`: There are helper functions here to handle bytes within a `Data` blob. This is code used by [nRF Connect for Mobile](https://apps.apple.com/es/app/nrf-connect-for-mobile/id1054362403) to read individual bytes from advertised BLE `Data`. The are functions to format `Data` as `String` as well.
 
 ## In Use By
 
