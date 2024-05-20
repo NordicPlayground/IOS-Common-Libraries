@@ -12,8 +12,6 @@ import SwiftUI
 
 public struct PasswordField: View {
     
-    static let StandardImageSize = CGSize(width: 40, height: 40)
-    
     @Environment(\.colorScheme) var colorScheme
     
     // MARK: Private Properties
@@ -32,33 +30,25 @@ public struct PasswordField: View {
     // MARK: Body
     
     public var body: some View {
-        HStack(alignment: .lastTextBaseline) {
-            Image(systemName: "key.fill")
-                .frame(size: Self.StandardImageSize)
-                .accentColor(.nordicDarkGrey)
-            
-            HStack {
-                ZStack {
-                    if shouldRevealPassword {
-                        TextField("Password", text: password)
-                    } else {
-                        SecureField("Password", text: password)
-                    }
-                }
-                .disableAllAutocorrections()
-                .textContentType(.password)
-                .foregroundColor(.textFieldColor)
-                .disabled(!enabled)
-                
-                Button(action: {
-                    shouldRevealPassword.toggle()
-                }) {
-                    Image(systemName: shouldRevealPassword ? "eye.slash" : "eye")
-                        .accentColor(.nordicDarkGrey)
+        HStack {
+            ZStack {
+                if shouldRevealPassword {
+                    TextField("Password", text: password)
+                } else {
+                    SecureField("Password", text: password)
                 }
             }
-            .modifier(RoundedTextFieldShape(colorScheme == .light ? .nordicLightGrey : .nordicMiddleGrey))
-            .padding(.vertical, 8)
+            .disableAllAutocorrections()
+            .textContentType(.password)
+            .foregroundColor(.textFieldColor)
+            .disabled(!enabled)
+            
+            Button(action: {
+                shouldRevealPassword.toggle()
+            }) {
+                Image(systemName: shouldRevealPassword ? "eye.slash" : "eye")
+                    .accentColor(.nordicDarkGrey)
+            }
         }
     }
 }
