@@ -24,7 +24,7 @@ public struct PasswordField: View {
     
     // MARK: Init
     
-    init(_ binding: Binding<String>, enabled: Bool) {
+    public init(_ binding: Binding<String>, enabled: Bool) {
         self.password = binding
         self.enabled = enabled
     }

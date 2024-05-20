@@ -15,7 +15,7 @@ public struct RoundedTextFieldShape: ViewModifier {
     private let backgroundColor: Color
     private let hasTextFieldBelow: Bool
     
-    init(_ backgroundColor: Color, hasTextFieldBelow: Bool = false) {
+    public init(_ backgroundColor: Color, hasTextFieldBelow: Bool = false) {
         self.backgroundColor = backgroundColor
         self.hasTextFieldBelow = hasTextFieldBelow
     }
