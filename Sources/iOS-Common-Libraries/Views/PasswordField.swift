@@ -12,17 +12,17 @@ import SwiftUI
 
 public struct PasswordField: View {
     
-    @Environment(\.colorScheme) var colorScheme
-    
     // MARK: Private Properties
     
+    private let title: String
     private var password: Binding<String>
     private var enabled: Bool
     @State private var shouldRevealPassword = false
     
     // MARK: Init
     
-    public init(_ binding: Binding<String>, enabled: Bool) {
+    public init(_ title: String = "Type Password Here", binding: Binding<String>, enabled: Bool) {
+        self.title = title
         self.password = binding
         self.enabled = enabled
     }
@@ -33,14 +33,13 @@ public struct PasswordField: View {
         HStack {
             ZStack {
                 if shouldRevealPassword {
-                    TextField("Password", text: password)
+                    TextField(title, text: password)
                 } else {
-                    SecureField("Password", text: password)
+                    SecureField(title, text: password)
                 }
             }
             .disableAllAutocorrections()
             .textContentType(.password)
-            .foregroundColor(.textFieldColor)
             .disabled(!enabled)
             
             Button(action: {
@@ -63,9 +62,9 @@ struct PasswordField_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            PasswordField($emptyPassword, enabled: true)
-            PasswordField($password, enabled: true)
-            PasswordField($password, enabled: false)
+            PasswordField(binding: $emptyPassword, enabled: true)
+            PasswordField(binding: $password, enabled: true)
+            PasswordField(binding: $password, enabled: false)
         }
         .previewLayout(.sizeThatFits)
     }
