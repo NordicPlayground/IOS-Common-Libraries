@@ -38,6 +38,7 @@ public struct PipelineView<Stage: PipelineStage>: View {
                 if stage.inProgress || stage.encounteredAnError {
                     Text(logLine)
                         .font(.caption)
+                        .lineLimit(1)
 #if os(macOS)
                         .padding(.top, 1)
 #endif
