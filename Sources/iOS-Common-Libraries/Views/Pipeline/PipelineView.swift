@@ -43,14 +43,14 @@ public struct PipelineView<Stage: PipelineStage>: View {
 #endif
                 }
                 
-                if let accessoryLine {
-                    Text(accessoryLine)
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
-                }
-                
                 if stage.inProgress {
+                    if let accessoryLine {
+                        Text(accessoryLine)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
+                    
                     if stage.isIndeterminate {
                         IndeterminateProgressView()
                             .padding(.top, 2)
