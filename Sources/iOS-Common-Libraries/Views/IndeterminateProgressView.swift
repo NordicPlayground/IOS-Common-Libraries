@@ -1,6 +1,7 @@
 //
 //  IndeterminateProgressView.swift
 //  nRF-Wi-Fi-Provisioner (iOS)
+//  iOS-Common-Libraries
 //
 //  Created by Dinesh Harjani on 26/4/24.
 //
@@ -16,10 +17,17 @@ public struct IndeterminateProgressView: View {
     
     // MARK: Properties
     
-    @State private var width: CGFloat = 0
-    @State private var offset: CGFloat = 0
+    @State private var width: CGFloat
+    @State private var offset: CGFloat
     @Environment(\.isEnabled) private var isEnabled
 
+    // MARK: Public Init
+    
+    public init(width: CGFloat, offset: CGFloat) {
+        self.width = 0
+        self.offset = 0
+    }
+    
     // MARK: View
     
     public var body: some View {
