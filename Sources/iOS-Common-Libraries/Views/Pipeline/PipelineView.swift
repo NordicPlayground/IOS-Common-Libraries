@@ -13,12 +13,14 @@ public struct PipelineView<Stage: PipelineStage>: View {
     
     private let stage: Stage
     private let logLine: String
+    private let accessoryLine: String?
     
     // MARK: Init
     
-    public init(stage: Stage, logLine: String) {
+    public init(stage: Stage, logLine: String, accessoryLine: String? = nil) {
         self.stage = stage
         self.logLine = logLine
+        self.accessoryLine = accessoryLine
     }
     
     // MARK: View
@@ -39,6 +41,13 @@ public struct PipelineView<Stage: PipelineStage>: View {
 #if os(macOS)
                         .padding(.top, 1)
 #endif
+                }
+                
+                if let accessoryLine {
+                    Text(accessoryLine)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
                 }
                 
                 if stage.inProgress {
