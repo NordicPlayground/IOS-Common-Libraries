@@ -23,7 +23,7 @@ public struct IndeterminateProgressView: View {
 
     // MARK: Public Init
     
-    public init(width: CGFloat, offset: CGFloat) {
+    public init() {
         self.width = 0
         self.offset = 0
     }
