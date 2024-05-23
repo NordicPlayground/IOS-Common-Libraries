@@ -14,9 +14,6 @@ public extension Array {
     func firstIndex<T: Equatable>(where keyPath: KeyPath<Self.Element, T>, equals value: T) -> Self.Index? {
         return firstIndex(where: { $0[keyPath: keyPath] == value })
     }
-}
-
-extension Array {
     
     func firstTrueIndex(for keyPath: KeyPath<Self.Element, Bool>) -> Self.Index? {
         return firstIndex(where: { $0[keyPath: keyPath] })
