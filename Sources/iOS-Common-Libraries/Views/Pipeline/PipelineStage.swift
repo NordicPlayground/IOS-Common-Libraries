@@ -52,6 +52,7 @@ public extension PipelineStage {
     mutating func update(inProgress: Bool = false, progressValue: Float? = nil) {
         self.encounteredAnError = false
         self.inProgress = inProgress
+        self.progress = progressValue
         self.completed = false
     }
     
