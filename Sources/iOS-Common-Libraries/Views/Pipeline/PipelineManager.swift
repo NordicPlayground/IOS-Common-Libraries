@@ -24,7 +24,7 @@ public class PipelineManager<Stage: PipelineStage>: ObservableObject {
             
             guard success else { return }
             for i in stages.indices {
-                stages[i].update(isCompleted: true)
+                stages[i].complete()
             }
             progress = 100.0
         }
@@ -57,7 +57,7 @@ public class PipelineManager<Stage: PipelineStage>: ObservableObject {
         self.started = false
         self.success = false
         for i in self.stages.indices {
-            self.stages[i].update(inProgress: false, isCompleted: false)
+            self.stages[i].update(inProgress: false)
         }
     }
 }
@@ -78,36 +78,39 @@ public extension PipelineManager {
     }
     
     func stagesFrom(_ stage: Stage) -> Array<Stage>.SubSequence {
-        guard let limitIndex = stages.firstIndex(where: { $0.id == stage.id }) else {
+        guard let limitIndex = stages.firstIndex(where: \.id, equals: stage.id) else {
             return []
         }
         return stages.suffix(from: limitIndex)
     }
     
     func isCompleted(_ stage: Stage) -> Bool {
-        guard let index = stages.firstIndex(where: { $0.id == stage.id }) else { return false }
+        guard let index = stages.firstIndex(where: \.id, equals: stage.id) else { return false }
         return stages[index].completed
     }
     
-    func inProgress(_ stage: Stage, speed: Double? = nil) {
-        guard let index = stages.firstIndex(where: { $0.id == stage.id }) else { return }
+    func inProgress(_ stage: Stage, progress: Float? = nil) {
+        guard let index = stages.firstIndex(where: \.id, equals: stage.id) else { return }
         started = true
+        if let progress {
+            stages[index].progress = progress
+        }
         stages[index].update(inProgress: true)
         
         for previousIndex in stages.indices where previousIndex < index {
-            stages[previousIndex].update(isCompleted: true)
+            stages[previousIndex].complete()
         }
         delegate?.onProgressUpdate()
     }
     
     func completed(_ stage: Stage) {
-        guard let index = stages.firstIndex(where: { $0.id == stage.id }) else { return }
-        stages[index].update(isCompleted: true)
+        guard let index = stages.firstIndex(where: \.id, equals: stage.id) else { return }
+        stages[index].complete()
         delegate?.onProgressUpdate()
     }
     
     func onError(_ error: Error) {
-        guard let currentStage = stages.firstIndex(where: { $0.inProgress }) else { return }
+        guard let currentStage = stages.firstTrueIndex(for: \.inProgress) else { return }
         stages[currentStage].declareError()
         self.error = error
         delegate?.onProgressUpdate()
