@@ -20,13 +20,17 @@ This is a Swift Package containing Swift code and Utilities/Assets, such as Colo
 
 #### InlinePicker
 
-![InlinePicker](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/inlinePicker.jpg)
+<p align="center" width="100%">
+    <img width="60%" src="https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/inlinePicker.jpg">
+</p>
 
 The main use case for this UI Component is to basically have an alternative of macOS' Segmented Control but for iOS, including iOS-derived platforms such as the Mac via Catalyst. It took a lot of setup to have a Picker that didn't "push" the UI and the user towards a new View, which we found can be very distracting. So we came up with `InlinePicker` View, and we didn't just use it in nRF Connect, it's also gone on to become a staple in other projects such as the Wi-Fi Provisioner App.
 
 #### PasswordField
 
-![PasswordField](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/passwordField.jpg)
+<p align="center" width="100%">
+    <img width="60%" src="https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/passwordField.jpg">
+</p>
 
 > [!NOTE]  
 > The above screenshot is from nRF Edge Impulse, which is applying custom styling to PasswordField.
@@ -35,7 +39,9 @@ nRF Edge Impulse was our team's first "REST-based client", let's say. As such, w
 
 #### PipelineView
 
-![PasswordField](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/pipeline.jpg)
+<p align="center" width="100%">
+    <img width="60%" src="https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/pipeline.jpg">
+</p>
 
 The process of deploying a ML model to a nRF5340-powered device, which is one of the things nRF Edge Impulse does, was very complicated. The user sets up parameters for the ML Model, we send the request to the Edge Impulse back-end, the back-end builds the firmware we need to deploy, we then download said firmware, and use our own ![Device Firmware Update Library](https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager) to run it on the device. Making the user aware of all of the steps the app is doing, plus when and why it fails, was not easy. But we came up with a nice UI design we called 'the pipeline'. We then found ourselves in a similar situation when it came to nRF Wi-Fi Provisioner, which was unexpected. But we took the opportunity to make the pipeline components reusable, but also give ourselves some breathing space to allow each app to be able to customize it to their liking. 
 
