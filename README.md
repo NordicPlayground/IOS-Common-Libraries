@@ -33,6 +33,12 @@ The main use case for this UI Component is to basically have an alternative of m
 
 nRF Edge Impulse was our team's first "REST-based client", let's say. As such, we had to handle networking and user account details. This included password input which, as we know, is handled by the existing ![SecureField](https://developer.apple.com/documentation/swiftui/securefield) component. But, to our surprise, there's no way to allow the user to explicitly see what they're typing. We could've just dismissed the issue, but even to us when using the app it was a big nuissance. So we wrote it, initially just for nRF Edge Impulse. And then a similar need arose for nRF Wi-Fi Provisioner. So we refactored it out, allowing nRF Edge Impulse to keep its UI design, but allowing it to look more system-like for nRF Wi-Fi Provisioner.
 
+#### PipelineView
+
+![PasswordField](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/pipeline.jpg)
+
+The process of deploying a ML model to a nRF5340-powered device, which is one of the things nRF Edge Impulse does, was very complicated. The user sets up parameters for the ML Model, we send the request to the Edge Impulse back-end, the back-end builds the firmware we need to deploy, we then download said firmware, and use our own ![Device Firmware Update Library](https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager) to run it on the device. Making the user aware of all of the steps the app is doing, plus when and why it fails, was not easy. But we came up with a nice UI design we called 'the pipeline'. We then found ourselves in a similar situation when it came to nRF Wi-Fi Provisioner, which was unexpected. But we took the opportunity to make the pipeline components reusable, but also give ourselves some breathing space to allow each app to be able to customize it to their liking. 
+
 ### Colors
 
 The swatch of Nordic colors is available here for our own use. We're keeping to the [DRY Principle](https://wiki.c2.com/?DontRepeatYourself) of course, but the side-benefit of this is that updating the colors in one place, automagically updates all of our apps.
