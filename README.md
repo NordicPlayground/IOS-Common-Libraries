@@ -20,13 +20,18 @@ This is a Swift Package containing Swift code and Utilities/Assets, such as Colo
 
 #### InlinePicker
 
-<p align="center" width="100%">
-    <img src=" https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/inlinePicker.jpg">
-</p>
-
 ![InlinePicker](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/inlinePicker.jpg)
 
 The main use case for this UI Component is to basically have an alternative of macOS' Segmented Control but for iOS, including iOS-derived platforms such as the Mac via Catalyst. It took a lot of setup to have a Picker that didn't "push" the UI and the user towards a new View, which we found can be very distracting. So we came up with `InlinePicker` View, and we didn't just use it in nRF Connect, it's also gone on to become a staple in other projects such as the Wi-Fi Provisioner App.
+
+#### PasswordField
+
+![PasswordField](https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/passwordField.jpg)
+
+> [!NOTE]  
+> The above screenshot is from nRF Edge Impulse, which is applying custom styling to PasswordField.
+
+nRF Edge Impulse was our team's first "REST-based client", let's say. As such, we had to handle networking and user account details. This included password input which, as we know, is handled by the existing ![SecureField](https://developer.apple.com/documentation/swiftui/securefield) component. But, to our surprise, there's no way to allow the user to explicitly see what they're typing. We could've just dismissed the issue, but even to us when using the app it was a big nuissance. So we wrote it, initially just for nRF Edge Impulse. And then a similar need arose for nRF Wi-Fi Provisioner. So we refactored it out, allowing nRF Edge Impulse to keep its UI design, but allowing it to look more system-like for nRF Wi-Fi Provisioner.
 
 ### Colors
 
