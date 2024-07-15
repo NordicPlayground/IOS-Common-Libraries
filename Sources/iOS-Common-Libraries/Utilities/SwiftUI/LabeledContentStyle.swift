@@ -9,10 +9,10 @@
 
 import SwiftUI
 
-// MARK: - Accented
+// MARK: - AccentedContent
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
-public struct AccentedLabeledContentStyle: LabeledContentStyle {
+public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
     
     // MARK: Private Properties
     
@@ -74,11 +74,11 @@ public struct AccentedLabeledContentStyle: LabeledContentStyle {
 // MARK: - LabeledContentStyle
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
-public extension LabeledContentStyle where Self == AccentedLabeledContentStyle {
+public extension LabeledContentStyle where Self == AccentedContentLabeledContentStyle {
     
-    static var accented: AccentedLabeledContentStyle { .init() }
+    static var accentedContent: AccentedContentLabeledContentStyle { .init() }
     
-    static func accented(accentColor: Color = .universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedLabeledContentStyle {
-        AccentedLabeledContentStyle(accentColor: accentColor, labelFont: labelFont, lineLimit: lineLimit)
+    static func accentedContent(accentColor: Color = .universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedContentLabeledContentStyle {
+        AccentedContentLabeledContentStyle(accentColor: accentColor, labelFont: labelFont, lineLimit: lineLimit)
     }
 }

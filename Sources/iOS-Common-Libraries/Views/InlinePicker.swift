@@ -56,7 +56,7 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
                 Text(title)
             }
         }
-        .labeledContentStyle(.accented(lineLimit: 0))
+        .labeledContentStyle(.accentedContent(lineLimit: 0))
     }
 }
 
