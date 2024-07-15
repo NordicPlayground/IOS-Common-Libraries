@@ -9,6 +9,68 @@
 
 import SwiftUI
 
+// MARK: - AccentedLabel
+
+@available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+public struct AccentedLabelLabeledContentStyle: LabeledContentStyle {
+    
+    // MARK: Private Properties
+    
+    private let accentColor: Color
+    private let labelFont: Font?
+    private let lineLimit: Int
+    
+    // MARK: Init
+    
+    init(accentColor: Color = Color.universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) {
+        self.accentColor = accentColor
+        self.labelFont = labelFont
+        self.lineLimit = lineLimit
+    }
+    
+    // MARK: Properties
+    
+    @Environment(\.colorScheme) var colorScheme
+    private var textColor: Color {
+        switch colorScheme {
+        case .dark:
+            return .white
+        default:
+            return .black
+        }
+    }
+    
+    // MARK: Body
+    
+    @ViewBuilder
+    public func makeBody(configuration: Configuration) -> some View {
+        if lineLimit < 1 {
+            LabeledContent {
+                configuration.content
+                    .font(labelFont)
+                    .foregroundColor(textColor)
+            } label: {
+                configuration.label
+                    .font(labelFont)
+                    .setAccent(accentColor)
+                    .foregroundColor(accentColor)
+            }
+        } else {
+            LabeledContent {
+                configuration.content
+                    .font(labelFont)
+                    .foregroundColor(textColor)
+            } label: {
+                configuration.label
+                    .font(labelFont)
+                    .setAccent(accentColor)
+                    .foregroundColor(accentColor)
+            }
+            .lineLimit(lineLimit)
+        }
+    }
+}
+
 // MARK: - AccentedContent
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
@@ -72,6 +134,16 @@ public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
 }
 
 // MARK: - LabeledContentStyle
+
+@available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+public extension LabeledContentStyle where Self == AccentedLabelLabeledContentStyle {
+    
+    static var accentedLabel: AccentedContentLabeledContentStyle { .init() }
+    
+    static func accentedLabelt(accentColor: Color = .universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedLabelLabeledContentStyle {
+        AccentedLabelLabeledContentStyle(accentColor: accentColor, labelFont: labelFont, lineLimit: lineLimit)
+    }
+}
 
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
 public extension LabeledContentStyle where Self == AccentedContentLabeledContentStyle {
