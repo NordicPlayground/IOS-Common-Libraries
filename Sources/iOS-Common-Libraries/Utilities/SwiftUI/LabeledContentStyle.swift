@@ -28,18 +28,6 @@ public struct AccentedLabelLabeledContentStyle: LabeledContentStyle {
         self.lineLimit = lineLimit
     }
     
-    // MARK: Properties
-    
-    @Environment(\.colorScheme) var colorScheme
-    private var textColor: Color {
-        switch colorScheme {
-        case .dark:
-            return .white
-        default:
-            return .black
-        }
-    }
-    
     // MARK: Body
     
     @ViewBuilder
@@ -48,7 +36,7 @@ public struct AccentedLabelLabeledContentStyle: LabeledContentStyle {
             LabeledContent {
                 configuration.content
                     .font(labelFont)
-                    .foregroundColor(textColor)
+                    .foregroundColor(.primarylabel)
             } label: {
                 configuration.label
                     .font(labelFont)
@@ -59,7 +47,7 @@ public struct AccentedLabelLabeledContentStyle: LabeledContentStyle {
             LabeledContent {
                 configuration.content
                     .font(labelFont)
-                    .foregroundColor(textColor)
+                    .foregroundColor(.primarylabel)
             } label: {
                 configuration.label
                     .font(labelFont)
@@ -90,18 +78,6 @@ public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
         self.lineLimit = lineLimit
     }
     
-    // MARK: Properties
-    
-    @Environment(\.colorScheme) var colorScheme
-    private var textColor: Color {
-        switch colorScheme {
-        case .dark:
-            return .white
-        default:
-            return .black
-        }
-    }
-    
     // MARK: Body
     
     @ViewBuilder
@@ -115,7 +91,7 @@ public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
             } label: {
                 configuration.label
                     .font(labelFont)
-                    .foregroundColor(textColor)
+                    .foregroundColor(.primarylabel)
             }
         } else {
             LabeledContent {
@@ -126,7 +102,7 @@ public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
             } label: {
                 configuration.label
                     .font(labelFont)
-                    .foregroundColor(textColor)
+                    .foregroundColor(.primarylabel)
             }
             .lineLimit(lineLimit)
         }
