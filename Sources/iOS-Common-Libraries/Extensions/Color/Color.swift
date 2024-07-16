@@ -97,6 +97,40 @@ public extension Color {
      */
     static let nordicDarkGrey = Color(red: 51, green: 63, blue: 72)
     
+    // MARK: Label Color(s)
+    
+    static var primarylabel: Color {
+        #if os(OSX)
+        return Color(nsColor: .labelColor)
+        #elseif os(iOS)
+        return Color(uiColor: UIColor.label)
+        #endif
+    }
+    
+    static var secondarylabel: Color {
+        #if os(OSX)
+        return Color(nsColor: .secondaryLabelColor)
+        #elseif os(iOS)
+        return Color(uiColor: UIColor.secondaryLabel)
+        #endif
+    }
+
+    static var tertiarylabel: Color {
+        #if os(OSX)
+        return Color(nsColor: .tertiaryLabelColor)
+        #elseif os(iOS)
+        return Color(uiColor: UIColor.tertiaryLabel)
+        #endif
+    }
+    
+    static var quaternaryLabel: Color {
+        #if os(OSX)
+        return Color(nsColor: .quaternaryLabelColor)
+        #elseif os(iOS)
+        return Color(uiColor: UIColor.quaternaryLabel)
+        #endif
+    }
+    
     // MARK: Other Color(s)
     
     static var navigationBarBackground: Color {
