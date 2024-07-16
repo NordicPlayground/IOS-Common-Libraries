@@ -114,7 +114,7 @@ public struct AccentedContentLabeledContentStyle: LabeledContentStyle {
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
 public extension LabeledContentStyle where Self == AccentedLabelLabeledContentStyle {
     
-    static var accentedLabel: AccentedContentLabeledContentStyle { .init() }
+    static var accentedLabel: AccentedLabelLabeledContentStyle { .init() }
     
     static func accentedLabelt(accentColor: Color = .universalAccentColor, labelFont: Font? = nil, lineLimit: Int = 1) -> AccentedLabelLabeledContentStyle {
         AccentedLabelLabeledContentStyle(accentColor: accentColor, labelFont: labelFont, lineLimit: lineLimit)
