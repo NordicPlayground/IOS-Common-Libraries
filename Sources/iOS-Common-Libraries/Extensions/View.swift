@@ -135,7 +135,7 @@ public extension NavigationView {
     func setSingleColumnNavigationViewStyle() -> some View {
         self
         #if os(iOS)
-            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(.stack)
         #endif
     }
     
