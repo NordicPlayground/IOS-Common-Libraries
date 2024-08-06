@@ -29,6 +29,13 @@ public struct NordicLog {
 
     // MARK: - Init
     
+    public init(_ object: AnyObject, subsystem: String, delegate: Delegate? = nil) {
+        // Remove bundleName if possible.
+        let category = String(describing: object).components(separatedBy: ".").last
+            ?? String(describing: object)
+        self.init(category: category, subsystem: subsystem, delegate: delegate)
+    }
+    
     public init(_ clazz: AnyClass, subsystem: String, delegate: Delegate? = nil) {
         self.init(category: String(describing: clazz), subsystem: subsystem, delegate: delegate)
     }
