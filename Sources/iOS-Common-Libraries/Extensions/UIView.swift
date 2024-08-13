@@ -6,9 +6,14 @@
 //  Copyright © 2024 Nordic Semiconductor. All rights reserved.
 //
 
+#if os(iOS) || targetEnvironment(macCatalyst)
 import UIKit
 
+// MARK: - UIView Extension
+
 public extension UIView {
+    
+    // MARK: isAttachedToViewHierarchy
     
     /**
      Helper function to detect whether a `UIView` is part of a view hierarchy to prevent unneeded updates. In [nRF Connect](https://github.com/NordicSemiconductor/IOS-nRF-Connect), this is critical to ensure `UITableView`(s) do not fire data source changes when they're being swapped out, for example.
@@ -37,3 +42,4 @@ public extension UIView {
         return nil
     }
 }
+#endif
