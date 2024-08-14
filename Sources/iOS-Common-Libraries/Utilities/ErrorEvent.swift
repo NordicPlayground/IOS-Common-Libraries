@@ -24,6 +24,10 @@ public struct ErrorEvent: Error, Identifiable, Hashable {
     // MARK: Init
     
     public init(_ error: Error) {
+        if let errorEvent = error as? ErrorEvent {
+            self = errorEvent
+            return
+        }
         self.init(title: "Error", localizedDescription: error.localizedDescription)
     }
     
