@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - TextFieldAlertModifier
 
-struct TextFieldAlertModifier: ViewModifier {
+public struct TextFieldAlertModifier: ViewModifier {
     
     // MARK: Private Properties
     
@@ -21,7 +21,7 @@ struct TextFieldAlertModifier: ViewModifier {
     
     // MARK: Init
     
-    init(title: String, message: String,
+    public init(title: String, message: String,
          isPresented: Binding<Bool>, text: Binding<String>,
          onPositiveAction: @escaping () -> Void) {
         self.title = title
@@ -33,7 +33,7 @@ struct TextFieldAlertModifier: ViewModifier {
     
     // MARK: body
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .alert(title,
                    isPresented: $isPresented) {
@@ -53,7 +53,7 @@ struct TextFieldAlertModifier: ViewModifier {
 
 // MARK: View
 
-extension View {
+public extension View {
     
     func textFieldAlert(title: String, message: String,
                         isPresented: Binding<Bool>, text: Binding<String>,
