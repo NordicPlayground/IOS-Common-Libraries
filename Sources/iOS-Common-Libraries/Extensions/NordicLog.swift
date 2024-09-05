@@ -30,8 +30,10 @@ public struct NordicLog {
     // MARK: - Init
     
     public init(_ object: AnyObject, subsystem: String, delegate: Delegate? = nil) {
-        // Remove bundleName if possible.
-        let category = String(describing: object).components(separatedBy: ".").last
+        // Remove bundleName and clean UIView descriptions.
+        let category = String(describing: object)
+                .components(separatedBy: ".").last?
+                .components(separatedBy: ";").first
             ?? String(describing: object)
         self.init(category: category, subsystem: subsystem, delegate: delegate)
     }
