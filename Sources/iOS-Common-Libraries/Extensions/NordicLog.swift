@@ -10,6 +10,7 @@
 import Foundation
 import os
 import MetricKit
+import UIKit
 
 // MARK: - NordicLog Definition
 
@@ -17,7 +18,7 @@ public struct NordicLog {
 
     static let iOSCommonLibrarySubsystem = "com.nordicsemi.iOS-Common-Libraries"
     
-    // MARK: - Private Properties
+    // MARK: Private Properties
 
     private let category: String
     private let subsystem: String
@@ -27,14 +28,11 @@ public struct NordicLog {
     private let mxLog: OSLog
     private let delegate: Delegate?
 
-    // MARK: - Init
+    // MARK: Init
     
     public init(_ object: AnyObject, subsystem: String, delegate: Delegate? = nil) {
         // Remove bundleName and clean UIView descriptions.
-        let category = String(describing: object)
-                .components(separatedBy: ".").last?
-                .components(separatedBy: ";").first
-            ?? String(describing: object)
+        let category = Self.cleanObjectName(object)
         self.init(category: category, subsystem: subsystem, delegate: delegate)
     }
     
@@ -49,6 +47,26 @@ public struct NordicLog {
         poiLog = OSLog(subsystem: subsystem, category: .pointsOfInterest)
         mxLog = MXMetricManager.makeLogHandle(category: category)
         self.delegate = delegate
+    }
+    
+    // MARK: cleanObjectName
+    
+    private static func cleanObjectName(_ object: AnyObject) -> String {
+        switch object {
+        case is UIView:
+            return "\(object)"
+                .components(separatedBy: ".").last?
+                .components(separatedBy: ";").first
+            ?? "\(object)"
+        case is NSObject:
+            return "\(object)".components(separatedBy: ".").last ?? "\(object)"
+        default:
+            let objectName = "\(object)"
+                .components(separatedBy: ".").last
+            ?? "\(object)"
+            let pointerString = Unmanaged.passUnretained(object).toOpaque().debugDescription
+            return "\(objectName) <\(pointerString)>"
+        }
     }
 }
 
