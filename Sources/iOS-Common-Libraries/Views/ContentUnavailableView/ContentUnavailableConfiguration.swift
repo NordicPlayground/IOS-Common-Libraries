@@ -20,7 +20,14 @@ public struct ContentUnavailableConfiguration {
     
     public var imageForegroundColor: Color
     
-    public init(text: String? = nil, secondaryText: String? = nil, image: Image? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
+    public init(
+        text: String? = nil,
+        secondaryText: String? = nil,
+        image: Image? = nil,
+        imageWidth: CGFloat = 30,
+        imageHeight: CGFloat = 30,
+        imageForegroundColor: Color = .secondary.opacity(0.6)
+    ) {
         self.text = text
         self.secondaryText = secondaryText
         self.image = image
@@ -29,7 +36,14 @@ public struct ContentUnavailableConfiguration {
         self.imageForegroundColor = imageForegroundColor
     }
     
-    public init(text: String? = nil, secondaryText: String? = nil, systemName: String? = nil, imageWidth: CGFloat = 200, imageHeight: CGFloat = 200, imageForegroundColor: Color = .secondary) {
+    public init(
+        text: String? = nil,
+        secondaryText: String? = nil,
+        systemName: String? = nil,
+        imageWidth: CGFloat = 30,
+        imageHeight: CGFloat = 30,
+        imageForegroundColor: Color = .secondary.opacity(0.6)
+    ) {
         let image = systemName.map { Image(systemName: $0) }
         self.init(text: text, secondaryText: secondaryText, image: image, imageWidth: imageWidth, imageHeight: imageHeight, imageForegroundColor: imageForegroundColor)
     }

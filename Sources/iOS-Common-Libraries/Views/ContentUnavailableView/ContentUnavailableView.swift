@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, macOS 13.0, *)
 public struct ContentUnavailableView<Action: View>: View {
     public let configuration: ContentUnavailableConfiguration
     let actions: (() -> Action)
@@ -29,23 +29,26 @@ public struct ContentUnavailableView<Action: View>: View {
             configuration.text.map {
                 Text($0)
                     .multilineTextAlignment(.center)
-                    .font(.title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.secondary)
+                    .padding()
             }
             
             configuration.secondaryText.map {
                 Text($0)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    
             }
             
             actions()
                 .frame(maxWidth: 300)
         }
+        .padding()
     }
 }
 
-@available(iOS 15.0, *)
+@available(iOS 16, macOS 13, *)
 struct ContentUnavailableView_Previews: PreviewProvider {
     static var previews: some View {
         ContentUnavailableView(
