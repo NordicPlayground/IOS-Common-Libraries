@@ -20,42 +20,19 @@ public final class FPSCounter {
     
     private let clock = ContinuousClock()
     
-    private var currentSecondFrames: Int = 0
-    private var previousSecondFrames = 0
-    private var previousSecond = -1
+    private var currentSecondFrames: Int
+    private var previousSecondFrames: Int
+    private var previousSecond: Int
     
-    private var previousSecondFrameTime: Float = 0.0
+    private var previousSecondFrameTime: Float
     
-    // MARK: Private Function
+    // MARK: Init
     
-    func colorForFps(_ fps: Int) -> Color {
-        switch fps {
-        case 16...29:
-            return .nordicSun
-        case 30...58:
-            return .nordicSky
-        case 59...70:
-            return .green
-        case 71...240:
-            return .nordicBlue
-        default:
-            return .nordicRed
-        }
-    }
-    
-    func colorForMs(_ ms: Float) -> Color {
-        switch ms {
-        case 0.0...8.34: // 120fps or faster
-            return .purple
-        case 8.34...16.66: // 120...60 fps
-            return .nordicBlue
-        case 16.67...33.33: // 60...30 fps
-            return .green
-        case 33.34...66.67: // 30...15 fps
-            return .nordicSky
-        default: // < 15 fps
-            return .nordicRed
-        }
+    public init() {
+        self.currentSecondFrames = 0
+        self.previousSecondFrames = 0
+        self.previousSecond = -1
+        self.previousSecondFrameTime = 0.0
     }
     
     // MARK: API
@@ -83,6 +60,40 @@ public final class FPSCounter {
                 .foregroundStyle(colorForMs(previousSecondFrameTime))
                 .font(.caption)
                 .bold()
+        }
+    }
+    
+    // MARK: colorForFps
+    
+    func colorForFps(_ fps: Int) -> Color {
+        switch fps {
+        case 16...29:
+            return .nordicSun
+        case 30...58:
+            return .nordicSky
+        case 59...70:
+            return .green
+        case 71...240:
+            return .nordicBlue
+        default:
+            return .nordicRed
+        }
+    }
+    
+    // MARK: colorForMs
+    
+    func colorForMs(_ ms: Float) -> Color {
+        switch ms {
+        case 0.0...8.34: // 120fps or faster
+            return .purple
+        case 8.34...16.66: // 120...60 fps
+            return .nordicBlue
+        case 16.67...33.33: // 60...30 fps
+            return .green
+        case 33.34...66.67: // 30...15 fps
+            return .nordicSky
+        default: // < 15 fps
+            return .nordicRed
         }
     }
 }
