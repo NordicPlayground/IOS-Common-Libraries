@@ -37,6 +37,41 @@ The main use case for this UI Component is to basically have an alternative of m
 
 nRF Edge Impulse was our team's first "REST-based client", let's say. As such, we had to handle networking and user account details. This included password input which, as we know, is handled by the existing ![SecureField](https://developer.apple.com/documentation/swiftui/securefield) component. But, to our surprise, there's no way to allow the user to explicitly see what they're typing. We could've just dismissed the issue, but even to us when using the app it was a big nuissance. So we wrote it, initially just for nRF Edge Impulse. And then a similar need arose for nRF Wi-Fi Provisioner. So we refactored it out, allowing nRF Edge Impulse to keep its UI design, but allowing it to look more system-like for nRF Wi-Fi Provisioner.
 
+#### FPSCounter
+
+<p align="center" width="100%">
+    <img width="60%" src="https://raw.githubusercontent.com/NordicPlayground/IOS-Common-Libraries/main/fpsCounter.jpeg">
+</p>
+
+For nRF Connect, we rewrote the RSSI Graph from scratch, removing our dependency from the ![Charts framework we were using previously](https://github.com/ChartsOrg/Charts). In fact, it was in use even ![in the older, 1.x version of nRF Connect](https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/announcing-nrf-connect-2-0-for-ios). Regardless, we decided to move on to our own implementation, based on SwiftUI, which provided a big improvement in CPU / power use. We wanted to measure how efficient our code is, so we came up with an `FPSCounter`.
+
+It's tricky to use, so here's a simplified version of the code we use in nRF Connect to measure the time the RSSI Graph takes to draw. 
+
+> [!CAUTION]
+> This is our best-guess on how to implement such a thing. Obviously, we could be out-of-this-world wrong. If that's the case, we'd happy to listen and learn from you.
+
+```swift
+struct YourView: View {
+
+    private let clock = ContinuousClock()
+    private var fps = FPSCounter()
+
+    var body: some View {
+        VStack {
+            
+            var childViewToMeasure: ChildViewType? = nil
+            let time = clock.measure {
+                childViewToMeasure = ChildViewType()
+            }
+            
+            childViewToMeasure
+            
+            fps.countFrame(Float(time.components.attoseconds) * 1e-12)
+        }
+    }
+}
+```
+
 #### PipelineView
 
 <p align="center" width="100%">
