@@ -60,13 +60,13 @@ struct YourView: View {
         VStack {
             
             var childViewToMeasure: ChildViewType? = nil
-            let time = clock.measure {
+            let instant = clock.measure {
                 childViewToMeasure = ChildViewType()
             }
             
             childViewToMeasure
             
-            fps.countFrame(Float(time.components.attoseconds) * 1e-12)
+            fps.countFrame(at: instant)
         }
     }
 }
