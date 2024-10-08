@@ -37,7 +37,8 @@ public final class FPSCounter {
     
     // MARK: API
     
-    public func countFrame(_ frameTime: Float = 0.0) -> some View {
+    public func countFrame(at instant: ContinuousClock.Instant.Duration) -> some View {
+        let frameTime: Float = Float(instant.components.attoseconds) * 1e-12
         let second = Calendar.current.component(.second, from: .now)
         if second != previousSecond {
             previousSecond = second
