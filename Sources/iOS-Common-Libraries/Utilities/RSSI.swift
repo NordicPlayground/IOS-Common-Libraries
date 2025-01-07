@@ -12,12 +12,21 @@ import SwiftUI
 // MARK: - RSSI
 
 public enum RSSI: Int, Equatable, CaseIterable {
+    
+    // MARK: values
+    
     case outOfRange = 127
     case practicalBest = -20
     case practicalWorst = -100
     case bad
     case ok
     case good
+    
+    // MARK: practicalRange
+    
+    public static let practicalRange = practicalWorst.rawValue...practicalBest.rawValue
+    
+    // MARK: color
     
     public var color: Color {
         switch self {
@@ -33,6 +42,8 @@ public enum RSSI: Int, Equatable, CaseIterable {
             return .red
         }
     }
+    
+    // MARK: numberOfBars
     
     public var numberOfBars: Int {
         switch self {
