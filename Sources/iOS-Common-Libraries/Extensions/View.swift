@@ -40,6 +40,13 @@ public extension View {
         return listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
     
+    @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+    @inlinable func fixedListRowSeparatorPadding() -> some View {
+        return alignmentGuide(.listRowSeparatorLeading) { dimension in
+            dimension[.leading]
+        }
+    }
+    
     // MARK: setAccent
     
     @inlinable func setAccent(_ color: Color) -> some View {
