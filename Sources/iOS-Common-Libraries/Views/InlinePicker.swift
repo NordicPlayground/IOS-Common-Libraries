@@ -41,7 +41,7 @@ public struct InlinePicker<T: Hashable & Equatable>: View {
         LabeledContent {
             Picker("", selection: selectedValue) {
                 ForEach(possibleValues, id: \.self) { value in
-                    Text((value as? CustomDebugStringConvertible)?.debugDescription ?? (value as? CustomStringConvertible).nilDescription)
+                    Text((value as? CustomStringConvertible)?.description ?? (value as? CustomDebugStringConvertible)?.debugDescription ?? "nil")
                         .tag(value)
                 }
             }
