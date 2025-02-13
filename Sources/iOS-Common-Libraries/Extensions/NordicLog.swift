@@ -10,7 +10,9 @@
 import Foundation
 import os
 import MetricKit
+#if canImport(UIKit)
 import UIKit
+#endif
 
 // MARK: - NordicLog Definition
 
