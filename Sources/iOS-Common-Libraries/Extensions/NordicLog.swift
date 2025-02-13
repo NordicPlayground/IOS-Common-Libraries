@@ -10,7 +10,7 @@
 import Foundation
 import os
 import MetricKit
-#if canImport(UIKit)
+#if os(iOS) || targetEnvironment(macCatalyst)
 import UIKit
 #endif
 
@@ -55,11 +55,13 @@ public struct NordicLog {
     
     private static func cleanObjectName(_ object: AnyObject) -> String {
         switch object {
+        #if os(iOS) || targetEnvironment(macCatalyst)
         case is UIView:
             return "\(object)"
                 .components(separatedBy: ".").last?
                 .components(separatedBy: ";").first
             ?? "\(object)"
+        #endif
         case is NSObject:
             return "\(object)".components(separatedBy: ".").last ?? "\(object)"
         default:
