@@ -63,6 +63,13 @@ public struct TemperatureMeasurement {
             self.location = nil
         }
     }
+    
+    // MARK: API
+    
+    public func temperatureFormattedString() -> String {
+        let measurement = Measurement<UnitTemperature>(value: Double(temperature), unit: isTemperatureInFahrenheit ? .fahrenheit : .celsius)
+        return String(format: "%.2f\(measurement.unit.symbol)", measurement.value)
+    }
 }
 
 // MARK: - Location
