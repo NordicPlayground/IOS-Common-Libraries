@@ -19,6 +19,11 @@ public enum Constant {
     
     // MARK: - App
     
+    static public func bundleName(forBundleWithClass anyClass: AnyClass) -> String {
+        return Bundle(for: anyClass).object(forInfoDictionaryKey: "CFBundleName") as? String
+                ?? "N/A"
+    }
+    
     static public func appName(forBundleWithClass anyClass: AnyClass) -> String {
         return Bundle(for: anyClass).object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
                 ?? "N/A"
