@@ -40,4 +40,25 @@ public enum Constant {
     static public let copyright: String = {
         return "Copyright © \(Date.currentYear()) Nordic Semiconductor ASA"
     }()
+    
+    static public var isLowPowerMode: Bool {
+        ProcessInfo.processInfo.isLowPowerModeEnabled
+    }
+    
+    static public let isRunningOnSimulator: Bool = {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }()
+    
+    static public var onMacOS: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        // Returns true if running iOS App on macOS on Apple Silicon.
+        return ProcessInfo.processInfo.isMacCatalystApp
+        #endif
+    }
 }
