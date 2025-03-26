@@ -35,7 +35,7 @@ public struct NoContentView: View {
     // MARK: Private Properties
     
     private let title: String
-    private let systemImage: String
+    private let image: Image
     private let description: String?
     private let style: Style
     private let animated: Bool
@@ -46,8 +46,13 @@ public struct NoContentView: View {
     
     public init(title: String, systemImage: String, description: String? = nil,
                 style: Style = .normal, animated: Bool = true) {
+        self.init(title: title, image: Image(systemName: systemImage), description: description, style: style, animated: animated)
+    }
+    
+    public init(title: String, image: Image, description: String? = nil,
+                style: Style = .normal, animated: Bool = true) {
         self.title = title
-        self.systemImage = systemImage
+        self.image = image
         self.description = description
         self.style = style
         self.animated = animated
@@ -58,7 +63,7 @@ public struct NoContentView: View {
     public var body: some View {
         VStack {
             ContentUnavailableView {
-                Image(systemName: systemImage)
+                image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(size: CGSize(width: 60.0, height: 60.0))
