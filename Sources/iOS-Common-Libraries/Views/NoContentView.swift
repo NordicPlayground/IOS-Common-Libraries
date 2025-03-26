@@ -34,7 +34,7 @@ public struct NoContentView: View {
     
     // MARK: Private Properties
     
-    private let title: String
+    private let text: Text
     private let image: Image
     private let description: String?
     private let style: Style
@@ -46,12 +46,12 @@ public struct NoContentView: View {
     
     public init(title: String, systemImage: String, description: String? = nil,
                 style: Style = .normal, animated: Bool = true) {
-        self.init(title: title, image: Image(systemName: systemImage), description: description, style: style, animated: animated)
+        self.init(text: Text(title), image: Image(systemName: systemImage), description: description, style: style, animated: animated)
     }
     
-    public init(title: String, image: Image, description: String? = nil,
+    public init(text: Text, image: Image, description: String? = nil,
                 style: Style = .normal, animated: Bool = true) {
-        self.title = title
+        self.text = text
         self.image = image
         self.description = description
         self.style = style
@@ -74,7 +74,7 @@ public struct NoContentView: View {
                         startAnimations()
                     }
                 
-                Text(title)
+                text
                     .font(.title)
                     .bold()
             } description: {
