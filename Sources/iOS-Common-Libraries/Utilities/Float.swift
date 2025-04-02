@@ -31,6 +31,31 @@ public extension Float {
             self = Float32(mantissa) * Float32(magnitude)
         }
     }
+    
+    // MARK: SFloat
+    
+    init(asSFloat data: Data) {
+        let sfloatData = UInt16(data.littleEndianBytes(atOffset: 0, as: UInt16.self))
+        var mantissa = Int16(sfloatData & 0x0FFF)
+        var exponent = Int8(sfloatData >> 12)
+        if exponent >= 0x0008 {
+            exponent = -( (0x000F + 1) - exponent )
+        }
+        
+        if mantissa >= SFloatReserved.firstReservedValue.rawValue && mantissa <= SFloatReserved.negativeINF.rawValue {
+            self = Float.reservedValues[Int(mantissa - SFloatReserved.firstReservedValue.rawValue)]
+        } else {
+            if mantissa > SFloatReserved.nres.rawValue {
+                mantissa = -((0x0FFF + 1) - mantissa)
+            }
+            let magnitude = pow(10.0, Double(exponent))
+            self = Float(mantissa) * Float(magnitude)
+        }
+    }
+    
+    // MARK: reservedValues
+    
+    static let reservedValues: [Float] = [.infinity, .nan, .nan, .nan, -.infinity]
 }
 
 // MARK: - ReservedFloatValues
@@ -43,4 +68,17 @@ public enum ReservedFloatValues: UInt32 {
     case negativeINF = 0x00800002
     
     static let firstReservedValue = ReservedFloatValues.positiveINF
+}
+
+// MARK: - SFloatReserved
+
+public enum SFloatReserved: Int16 {
+    case positiveINF = 0x07FE
+    case nan = 0x07FF
+    case nres = 0x0800
+    case reserved = 0x0801
+    case negativeINF = 0x0802
+    
+    static let firstReservedValue = SFloatReserved.positiveINF
+    static let byteSize = 2 * MemoryLayout<UInt8>.size // 2 bytes
 }
