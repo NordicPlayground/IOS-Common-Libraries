@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public struct FlickerView<Content: View>: View {
     
     // MARK: Private Properties
@@ -46,7 +46,7 @@ public struct FlickerView<Content: View>: View {
 
 // MARK: - ViewModifier
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public struct FlickerModifier: ViewModifier {
   
     public func body(content: Content) -> some View {
@@ -54,7 +54,7 @@ public struct FlickerModifier: ViewModifier {
     }
 }
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public extension View {
       
     func flicker() -> some View {

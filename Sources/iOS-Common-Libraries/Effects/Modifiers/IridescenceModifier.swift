@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - IridescenceView
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public struct IridescenceView<Content: View>: View {
     
     // MARK: Private Properties
@@ -46,7 +46,7 @@ public struct IridescenceView<Content: View>: View {
 
 // MARK: - ViewModifier
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public struct IridescenceModifier: ViewModifier {
   
     public func body(content: Content) -> some View {
@@ -54,7 +54,7 @@ public struct IridescenceModifier: ViewModifier {
     }
 }
 
-@available(iOS 17.0, macCatalyst 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, macOS 14.0, *)
 public extension View {
       
     func iridescence() -> some View {
