@@ -33,29 +33,51 @@ public extension Data {
     
     // MARK: HexEncodingOptions
     
-    struct HexEncodingOptions: OptionSet {
-        
-        public static let upperCase = HexEncodingOptions(rawValue: 1)
-        public static let reverseEndianness = HexEncodingOptions(rawValue: 2)
-        
-        public let rawValue: Int
-        
-        public init(rawValue: Int) {
-            self.rawValue = rawValue << 0
-        }
+    enum HexEncodingOptions: RegisterValue, Option {
+        case upperCase
+        case byteSpacing
+        case prepend0x
+        case twoByteSpacing
+        case reverseEndianness
     }
 
     // MARK: hexEncodedString
     
-    func hexEncodedString(options: HexEncodingOptions = [], separator: String = "") -> String {
-        let format = options.contains(.upperCase) ? "%02hhX" : "%02hhx"
+    func hexEncodedString(options: BitField<HexEncodingOptions> = [], separator: String = "") -> String {
+        guard !isEmpty else { return "0 bytes" }
         
+        var format = options.contains(.upperCase) ? "%02hhX" : "%02hhx"
+        if options.contains(.byteSpacing) {
+            format.append(" ")
+        }
+
         var bytes = self
         if options.contains(.reverseEndianness) {
             bytes.reverse()
         }
-        return bytes
-            .map { String(format: format, $0) }
-            .joined(separator: separator)
+        var body: String = options.contains(.prepend0x) ? "0x" : ""
+        if options.contains(.byteSpacing) {
+            body.reserveCapacity(
+                options.contains(.prepend0x) ? 1 : 0 + bytes.count * 3
+            )
+        } else {
+            body.reserveCapacity(
+                options.contains(.prepend0x) ? 1 : 0 + bytes.count * 2
+            )
+        }
+        
+        autoreleasepool {
+            body.append(contentsOf: bytes.map {
+                String(format: format, $0)
+            }.joined())
+        }
+        
+        if options.contains(.twoByteSpacing) {
+            autoreleasepool {
+                body = body.inserting(separator: " ", every: 4)
+            }
+        }
+
+        return body
     }
 }
