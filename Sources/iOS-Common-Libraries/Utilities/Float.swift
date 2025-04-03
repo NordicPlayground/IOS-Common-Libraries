@@ -35,7 +35,7 @@ public extension Float {
     // MARK: SFloat
     
     init(asSFloat data: Data) {
-        let sfloatData = UInt16(data.littleEndianBytes(atOffset: 0, as: UInt16.self))
+        let sfloatData = UInt16(data.littleEndianBytes(as: UInt16.self))
         var mantissa = Int16(sfloatData & 0x0FFF)
         var exponent = Int8(sfloatData >> 12)
         if exponent >= 0x0008 {
@@ -79,6 +79,6 @@ public enum SFloatReserved: Int16 {
     case reserved = 0x0801
     case negativeINF = 0x0802
     
-    static let firstReservedValue = SFloatReserved.positiveINF
-    static let byteSize = 2 * MemoryLayout<UInt8>.size // 2 bytes
+    public static let firstReservedValue = SFloatReserved.positiveINF
+    public static let byteSize = MemoryLayout<UInt16>.size // 2 bytes
 }
