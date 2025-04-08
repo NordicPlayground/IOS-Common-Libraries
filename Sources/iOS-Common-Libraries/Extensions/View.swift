@@ -130,6 +130,30 @@ private struct OnceOnly: ViewModifier {
     }
 }
 
+// MARK: - taskOnce()
+
+public extension View {
+    
+    func taskOnce(_ asyncAction: @escaping () async -> Void) -> some View {
+        modifier(TaskOnceOnly(asyncAction: asyncAction))
+    }
+}
+
+private struct TaskOnceOnly: ViewModifier {
+    
+    @State private var doneAlready = false
+    
+    let asyncAction: () async -> Void
+    
+    func body(content: Content) -> some View {
+        content.task {
+            guard !doneAlready else { return }
+            doneAlready = true
+            await asyncAction()
+        }
+    }
+}
+
 // MARK: - Picker
 
 public extension Picker {
