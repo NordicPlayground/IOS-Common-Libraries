@@ -41,7 +41,12 @@ public extension Date {
     
     // MARK: toData()
     
-    func toData() -> Data? {
+    enum Options: RegisterValue, Option {
+        case appendTimeZone
+        case appendDSTOffset
+    }
+    
+    func toData(options: BitField<Options> = []) -> Data? {
         let components = Calendar.current.dateComponents([
             .year, .month, .day, .hour, .minute, .second
         ], from: self)
@@ -57,6 +62,23 @@ public extension Date {
         output.append(Data(repeating: UInt8(hoursComp), count: MemoryLayout<UInt8>.size))
         output.append(Data(repeating: UInt8(minutesComp), count: MemoryLayout<UInt8>.size))
         output.append(Data(repeating: UInt8(secondsComp), count: MemoryLayout<UInt8>.size))
+        
+        if options.contains(.appendTimeZone) {
+            // Date is always in UTC, and TimeZone Characteristic TimeZone is
+            // relative to UTC, so zero.
+            output.append(Data(repeating: 0, count: MemoryLayout<UInt8>.size))
+        }
+        
+        if options.contains(.appendDSTOffset), let timeZone = TimeZone(identifier: "UTC") {
+            let utcDSTOffset = Measurement<UnitDuration>(value: timeZone.daylightSavingTimeOffset(for: self), unit: .seconds)
+            let utcDSTOffsetMinutes = utcDSTOffset.converted(to: .minutes).value
+            // DST Offset is in 15 minute intervals. So a 2 hour offset,
+            // would be 120 / 15 == 8.
+            let utcDSTOffsetInIntervals = utcDSTOffsetMinutes / 15.0
+            output.append(Data(repeating: UInt8(utcDSTOffsetInIntervals),
+                               count: MemoryLayout<UInt8>.size))
+        }
+        
         return output
     }
     
