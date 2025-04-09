@@ -39,6 +39,27 @@ public extension Date {
         self = date
     }
     
+    // MARK: toData()
+    
+    func toData() -> Data? {
+        let components = Calendar.current.dateComponents([
+            .year, .month, .day, .hour, .minute, .second
+        ], from: self)
+        
+        var output = Data()
+        guard let yearComp = components.year, let monthComp = components.month,
+              let dayComp = components.day, let hoursComp = components.hour,
+              let minutesComp = components.minute, let secondsComp = components.second else { return nil }
+        var year = UInt16(yearComp)
+        output.append(contentsOf: Data(bytes: &year, count: MemoryLayout<UInt16>.size))
+        output.append(contentsOf: Data(repeating: UInt8(monthComp), count: MemoryLayout<UInt8>.size))
+        output.append(contentsOf: Data(repeating: UInt8(dayComp), count: MemoryLayout<UInt8>.size))
+        output.append(Data(repeating: UInt8(hoursComp), count: MemoryLayout<UInt8>.size))
+        output.append(Data(repeating: UInt8(minutesComp), count: MemoryLayout<UInt8>.size))
+        output.append(Data(repeating: UInt8(secondsComp), count: MemoryLayout<UInt8>.size))
+        return output
+    }
+    
     // MARK: currentYear()
     
     static func currentYear() -> Int {
