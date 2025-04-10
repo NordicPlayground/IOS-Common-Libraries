@@ -12,7 +12,7 @@ import SwiftUI
 
 // MARK: - BadgeView
 
-struct BadgeView: View {
+public struct BadgeView: View {
     
     // MARK: Private Properties
     
@@ -22,21 +22,19 @@ struct BadgeView: View {
     
     // MARK: init
     
-    init(image: Image?, name: String, color: Color) {
+    public init(name: String) {
+        self.init(image: nil, name: name, color: .secondary)
+    }
+    
+    public init(image: Image?, name: String, color: Color) {
         self.image = image
         self.name = name
         self.color = color
     }
     
-    init(name: String) {
-        self.image = nil
-        self.name = name
-        self.color = .secondary
-    }
-    
     // MARK: view
     
-    var body: some View {
+    public var body: some View {
         HStack {
             image?
                 .resizable()
