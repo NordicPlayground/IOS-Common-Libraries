@@ -27,11 +27,11 @@ public extension Data {
         return subdata(in: offset ..< offset + byteLength).withUnsafeBytes { Int(T(bigEndian: $0.load(as: T.self))) }
     }
     
+    private static let byteCountFormatter = ByteCountFormatter()
     func sizeString(units: ByteCountFormatter.Units = [.useAll], countStyle: ByteCountFormatter.CountStyle = .file) -> String {
-        let byteCountFormatter = ByteCountFormatter()
-        byteCountFormatter.allowedUnits = units
-        byteCountFormatter.countStyle = .file
-        return byteCountFormatter.string(fromByteCount: Int64(count))
+        Self.byteCountFormatter.allowedUnits = units
+        Self.byteCountFormatter.countStyle = .file
+        return Self.byteCountFormatter.string(fromByteCount: Int64(count))
     }
 }
 
