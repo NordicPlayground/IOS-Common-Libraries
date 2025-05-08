@@ -66,7 +66,7 @@ public struct NoContentView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(size: CGSize(width: 60.0, height: 60.0))
+                    .frame(size: CGSize(asSquare: 60.0))
                     .foregroundStyle(style.tintColor)
                     .rotationEffect(Angle.degrees(rotationAngle))
                     .onAppear {
