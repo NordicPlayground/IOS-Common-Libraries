@@ -14,7 +14,7 @@ import SwiftUI
 @available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
 public final class FPSCounter {
     
-    private static let DotSize = CGSize(width: 8.0, height: 8.0)
+    private static let DotSize = CGSize(asSquare: 8.0)
     
     // MARK: Private Properties
     
