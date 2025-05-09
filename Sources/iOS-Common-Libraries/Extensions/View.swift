@@ -175,6 +175,47 @@ public extension Picker {
     }
 }
 
+// MARK: - DisclosureGroup
+
+@available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+public struct FixedOnTheRightStyle: DisclosureGroupStyle {
+    
+    public func makeBody(configuration: Configuration) -> some View {
+        Button {
+            withAnimation {
+                configuration.isExpanded.toggle()
+            }
+        } label: {
+            HStack(alignment: .firstTextBaseline) {
+                configuration.label
+                
+                Spacer()
+                
+                Image(systemName: "chevron.down")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(size: CGSize(asSquare: 12.0))
+                    .rotationEffect(.degrees(configuration.isExpanded ? 0 : 90))
+                    .foregroundColor(.universalAccentColor)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+
+        if configuration.isExpanded {
+            configuration.content
+                .padding(.leading)
+                .transition(.move(edge: .top).combined(with: .asymmetric(insertion: .opacity.animation(.easeIn(duration: 0.6)), removal: .opacity.animation(.easeOut(duration: 0.1)))))
+        }
+    }
+}
+
+@available(iOS 16.0, macCatalyst 16.0, macOS 13.0, *)
+public extension DisclosureGroupStyle where Self == FixedOnTheRightStyle {
+    
+    static var fixedOnTheRight: FixedOnTheRightStyle { .init() }
+}
+
 // MARK: - NavigationView
 
 public extension NavigationView {
