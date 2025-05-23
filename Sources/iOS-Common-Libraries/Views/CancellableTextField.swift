@@ -95,7 +95,7 @@ public struct CancellableTextField: View {
                     .padding(4)
                 }
             }
-            .background(Color(.systemGray6))
+            .background(Color.secondarylabel)
             .cornerRadius(8)
             
             if isEditing {
