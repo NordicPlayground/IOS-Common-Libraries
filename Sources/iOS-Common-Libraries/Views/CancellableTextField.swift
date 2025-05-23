@@ -64,11 +64,19 @@ public struct CancellableTextField: View {
                 TextField(emptyText, text: $text, onEditingChanged: { _ in
                     withAnimation {
                         // Assume if text changed, user is editing.
-                        self.isEditing = true
+                        isEditing = true
                     }
                 })
                 .padding(.vertical, 8)
                 .focused($isTextFieldInFocus)
+                .onChange(of: isTextFieldInFocus) { inFocus in
+                    // Set 'isEditing' to false if it's set to true but focus changed to 'false'.
+                    // Example: Dismissing keyboard with 'submit' button.
+                    guard isEditing, !inFocus else { return }
+                    withAnimation {
+                        isEditing = false
+                    }
+                }
                 
                 if isEditing {
                     Button {
@@ -76,7 +84,7 @@ public struct CancellableTextField: View {
                             self.text = ""
                             // Button action will make TextField lose focus via SwiftUI,
                             // so we restore it by force.
-                            self.isTextFieldInFocus = true
+                            isTextFieldInFocus = true
                         }
                     } label: {
                         Image(systemName: "multiply.circle.fill")
