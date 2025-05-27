@@ -1,18 +1,16 @@
 //
-//  DataParser.swift
-//  nRF-Connect
+//  CommonDataParser.swift
 //  iOSCommonLibraries
 //
-//  Created by Dinesh Harjani on 28/01/2019.
 //  Created by Dinesh Harjani on 27/5/25.
 //  Copyright © 2025 Nordic Semiconductor. All rights reserved.
 //
 
 import Foundation
 
-// MARK: - DataParser
+// MARK: - CommonDataParser
 
-public struct DataParser: CustomStringConvertible {
+public struct CommonDataParser: NordicDataParser {
     
     // MARK: Properties
     
@@ -21,9 +19,9 @@ public struct DataParser: CustomStringConvertible {
     
     private let meetsMinSize: ((Int) -> Bool)?
     private let parse: (Data) -> String?
-    
+
     // MARK: init
-    
+         
     public init(name: String, description: String, meetsMinSize: ((Int) -> Bool)? = nil,
                 parse: @escaping (Data) -> String?) {
         self.name = name
@@ -48,13 +46,13 @@ public struct DataParser: CustomStringConvertible {
 
 // MARK: Hashable, Equatable
 
-extension DataParser: Hashable, Equatable {
+extension CommonDataParser: Hashable, Equatable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
     }
     
-    public static func == (lhs: DataParser, rhs: DataParser) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 }
