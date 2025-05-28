@@ -75,11 +75,11 @@ public struct NoContentView: View {
                     }
                 
                 text
-                    .font(.title)
+                    .font(.title2)
                     .bold()
             } description: {
                 Text(description ?? "")
-                    .font(.callout)
+                    .font(.caption)
             }
         }
         .padding()
