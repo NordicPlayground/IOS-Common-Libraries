@@ -25,7 +25,7 @@ public struct NordicDataField: View {
     
     // MARK: Init
     
-    init(data: Binding<Data>, dataParser: Binding<CommonDataParser>,
+    public init(data: Binding<Data>, dataParser: Binding<CommonDataParser>,
          dataParsers: [CommonDataParser], parserIsUserSelectable: Bool = true) {
         self._data = data
         self._selectedParser = dataParser
