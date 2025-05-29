@@ -27,7 +27,7 @@ public protocol NordicDataParser: Hashable, Equatable, CustomStringConvertible {
 
 // MARK: isValid()
 
-extension NordicDataParser {
+public extension NordicDataParser {
     
     func isValid(_ data: Data) -> Bool {
         switch dataSizeRequirement {
