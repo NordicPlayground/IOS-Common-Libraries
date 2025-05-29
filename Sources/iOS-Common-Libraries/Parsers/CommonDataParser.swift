@@ -19,7 +19,20 @@ public enum CommonDataParser: String, RawRepresentable, CustomStringConvertible,
     
     // MARK: CustomStringConvertible
     
-    public var description: String { rawValue }
+    public var description: String {
+        switch self {
+        case .byteArray:
+            return "Byte Array"
+        case .unsignedInt:
+            return "Unsigned Int"
+        case .signedInt:
+            return "Signed Int"
+        case .boolean:
+            return "Boolean"
+        case .utf8:
+            return "UTF-8"
+        }
+    }
     
     // MARK: dataSizeRequirement
     
