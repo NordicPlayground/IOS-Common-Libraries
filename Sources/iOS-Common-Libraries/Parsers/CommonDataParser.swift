@@ -21,6 +21,23 @@ public enum CommonDataParser: String, RawRepresentable, CustomStringConvertible,
     
     public var description: String { rawValue }
     
+    // MARK: dataSizeRequirement
+    
+    public var dataSizeRequirement: NordicDataParserValidSize {
+        switch self {
+        case .byteArray:
+            return .atLeast(MemoryLayout<UInt8>.size)
+        case .unsignedInt:
+            return .anyOf([MemoryLayout<UInt8>.size, MemoryLayout<UInt16>.size, MemoryLayout<UInt32>.size])
+        case .signedInt:
+            return .anyOf([MemoryLayout<Int8>.size, MemoryLayout<Int16>.size, MemoryLayout<Int32>.size])
+        case .boolean:
+            return .exactly(MemoryLayout<Int8>.size)
+        case .utf8:
+            return .anySize
+        }
+    }
+    
     // MARK: callAsFunction
     
     public func callAsFunction(_ item: Data) -> String? {
@@ -60,25 +77,6 @@ public enum CommonDataParser: String, RawRepresentable, CustomStringConvertible,
             return bool ? "True" : "False"
         case .utf8:
             return String(data: item, encoding: .utf8) as String?
-        }
-    }
-    
-    // MARK: isValidDataLength
-    
-    public func isValidDataLength(_ data: Data) -> Bool {
-        switch self {
-        case .byteArray:
-            return data.hasItems
-        case .unsignedInt:
-            let unsignedIntSupportedSizes = [MemoryLayout<UInt8>.size, MemoryLayout<UInt16>.size, MemoryLayout<UInt32>.size]
-            return unsignedIntSupportedSizes.contains(data.count)
-        case .signedInt:
-            let signedIntSupportedSizes = [MemoryLayout<Int8>.size, MemoryLayout<Int16>.size, MemoryLayout<Int32>.size]
-            return signedIntSupportedSizes.contains(data.count)
-        case .boolean:
-            return data.count == MemoryLayout<Int8>.size
-        case .utf8:
-            return true
         }
     }
 }

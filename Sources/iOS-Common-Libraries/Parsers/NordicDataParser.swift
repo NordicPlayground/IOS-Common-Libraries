@@ -16,12 +16,38 @@ public protocol NordicDataParser: Hashable, Equatable, CustomStringConvertible {
     
     // MARK: Properties
     
+    var dataSizeRequirement: NordicDataParserValidSize { get }
+    
     var description: String { get }
     
     // MARK: API
     
     func callAsFunction(_ item: Data) -> String?
-    
-    func isValidDataLength(_ data: Data) -> Bool
 }
 
+// MARK: isValid()
+
+extension NordicDataParser {
+    
+    func isValid(_ data: Data) -> Bool {
+        switch dataSizeRequirement {
+        case .anySize:
+            return true
+        case .anyOf(let acceptedByteSizes):
+            return acceptedByteSizes.contains(data.count)
+        case .exactly(let byteCount):
+            return data.count == byteCount
+        case .atLeast(let minimumByteCount):
+            return data.count >= minimumByteCount
+        }
+    }
+}
+
+// MARK: - AcceptedDataSize
+
+public enum NordicDataParserValidSize {
+    case anySize
+    case anyOf(_ acceptedByteCounts: [Int])
+    case exactly(_ bytes: Int)
+    case atLeast(_ bytes: Int)
+}
