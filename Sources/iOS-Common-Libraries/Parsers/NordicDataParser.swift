@@ -39,6 +39,8 @@ public extension NordicDataParser {
             return data.count == byteCount
         case .atLeast(let minimumByteCount):
             return data.count >= minimumByteCount
+        case .greaterThan(let byteCount):
+            return data.count > byteCount
         }
     }
 }
@@ -50,4 +52,5 @@ public enum NordicDataParserValidSize {
     case anyOf(_ acceptedByteCounts: [Int])
     case exactly(_ bytes: Int)
     case atLeast(_ bytes: Int)
+    case greaterThan(_ bytes: Int)
 }
