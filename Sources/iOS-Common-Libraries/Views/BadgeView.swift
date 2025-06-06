@@ -40,14 +40,21 @@ public struct BadgeView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 12, maxHeight: 12)
-                .foregroundColor(color)
+                .foregroundColor(.white.opacity(0.85))
             
             Text(name)
-                .foregroundColor(.secondary)
+                .foregroundColor(.white.opacity(0.85))
                 .font(.caption)
+                .bold()
         }
         .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
-        .background(.blue.opacity(0.15))
-        .cornerRadius(6)
+        .background(
+            RoundedRectangle(cornerRadius: 6.0)
+                .strokeBorder(.primary, lineWidth: 0.5)
+                .background(
+                    RoundedRectangle(cornerRadius: 6.0)
+                        .fill(color)
+                )
+        )
     }
 }
