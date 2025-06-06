@@ -40,12 +40,13 @@ public struct BadgeView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 12, maxHeight: 12)
-                .foregroundColor(.white.opacity(0.85))
+                .foregroundColor(.white)
             
             Text(name)
-                .foregroundColor(.white.opacity(0.85))
+                .foregroundColor(.white)
                 .font(.caption)
                 .bold()
+                .allowsTightening(true)
         }
         .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
         .background(
@@ -56,5 +57,6 @@ public struct BadgeView: View {
                         .fill(color)
                 )
         )
+        .opacity(0.8)
     }
 }
