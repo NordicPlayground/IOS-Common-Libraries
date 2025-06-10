@@ -61,7 +61,7 @@ public extension GlucoseMeasurement {
             }
         }
         
-        static func reservedDescription(_ code: Int) -> String {
+        public static func reservedDescription(_ code: Int) -> String {
             return "Reserved For Future Use (\(code))"
         }
     }
@@ -93,7 +93,7 @@ public extension GlucoseMeasurement {
             }
         }
         
-        static func reservedDescription(_ code: Int) -> String {
+        public static func reservedDescription(_ code: Int) -> String {
             return "Reserved For Future Use (\(code))"
         }
     }
@@ -104,7 +104,6 @@ public extension GlucoseMeasurement {
 public extension GlucoseMeasurement {
     
     enum Status: RegisterValue, Option, CustomStringConvertible {
-        
         case deviceBatteryLow, sensorMalfunction, sampleSizeForBloodOrControlSolutionInsufficient
         case stripInsertionError, stripTypeIncorrectForDevice, sensorResultTooHigh, sensorResultTooLow
         case sensorTemperatureTooHigh, sensorTemperatureTooLow
