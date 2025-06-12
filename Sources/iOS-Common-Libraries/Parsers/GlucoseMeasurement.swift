@@ -111,7 +111,7 @@ public extension GlucoseMeasurement {
     
     func statusString() -> String {
         guard let status else {
-            return "Status: \(statusCode.nilDescription)"
+            return "Unknown"
         }
         return status.description
     }
