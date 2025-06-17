@@ -147,6 +147,7 @@ public extension GlucoseMeasurement {
 public extension GlucoseMeasurement {
     
     enum SensorType: RegisterValue, Option, CustomStringConvertible {
+        case reservedForFutureUse
         case capillaryBlood, capillaryPlasma
         case venousBlood, venousPlasma
         case arterialBlood, arterialPlasma
@@ -156,6 +157,8 @@ public extension GlucoseMeasurement {
         
         public var description: String {
             switch self {
+            case .reservedForFutureUse:
+                return SensorType.reservedDescription(Int(0))
             case .capillaryBlood:
                 return "Capillary Whole Blood"
             case .capillaryPlasma:
@@ -190,14 +193,17 @@ public extension GlucoseMeasurement {
 public extension GlucoseMeasurement {
     
     enum SensorLocation: RegisterValue, Option, CustomStringConvertible {
+        case reservedForFutureUse
         case finger
         case alternate
         case earlobe
         case controlSolution
-        case notAvailable
+        case notAvailable = 0xF
         
         public var description: String {
             switch self {
+            case .reservedForFutureUse:
+                return SensorLocation.reservedDescription(Int(rawValue))
             case .finger:
                 return "Finger"
             case .alternate:
@@ -207,7 +213,7 @@ public extension GlucoseMeasurement {
             case .controlSolution:
                 return "Control Solution"
             case .notAvailable:
-                return "Value Not Available"
+                return "Location Not Available"
             }
         }
         
@@ -222,8 +228,8 @@ public extension GlucoseMeasurement {
 public extension GlucoseMeasurement {
     
     enum Status: RegisterValue, Option, CustomStringConvertible {
-        case deviceBatteryLow, sensorMalfunction, sampleSizeForBloodOrControlSolutionInsufficient
-        case stripInsertionError, stripTypeIncorrectForDevice, sensorResultTooHigh, sensorResultTooLow
+        case deviceBatteryLow, sensorMalfunction, sampleSizeInsufficient
+        case stripInsertionError, stripTypeIncorrect, sensorResultTooHigh, sensorResultTooLow
         case sensorTemperatureTooHigh, sensorTemperatureTooLow
         case sensorReadInterrupted, seneralDeviceFault, timeFault
         
@@ -233,11 +239,11 @@ public extension GlucoseMeasurement {
                 return "Device Battery Low"
             case .sensorMalfunction:
                 return "Sensor Malfunction"
-            case .sampleSizeForBloodOrControlSolutionInsufficient:
+            case .sampleSizeInsufficient:
                 return "Sample Size For Blood Or Control Solution Insufficient"
             case .stripInsertionError:
                 return "Strip Insertion Error"
-            case .stripTypeIncorrectForDevice:
+            case .stripTypeIncorrect:
                 return "Strip Type Incorrect For Device"
             case .sensorResultTooHigh:
                 return "Sensor Result Too High"
