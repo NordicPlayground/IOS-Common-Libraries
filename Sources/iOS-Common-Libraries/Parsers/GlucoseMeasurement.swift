@@ -64,7 +64,7 @@ public struct GlucoseMeasurement {
         let typeAndLocation = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
         offset += MemoryLayout<UInt8>.size
         self.sensorCode = RegisterValue((typeAndLocation & 0xF0) >> 4)
-        self.locationCode = RegisterValue(typeAndLocation & 0xF0)
+        self.locationCode = RegisterValue(typeAndLocation & 0x0F)
         
         if flags.contains(.statusAnnunciationPresent) {
             guard data.canRead(UInt8.self, atOffset: offset) else { return nil }
