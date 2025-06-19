@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: RecordOpcode
 
-public enum RecordOpcode: UInt8, CustomStringConvertible, CaseIterable {
+public enum RecordOpcode: UInt8, Hashable, Equatable, CustomStringConvertible, CaseIterable {
     case reportStoredRecords = 1
     case deleteStoredRecords = 2
     case abortOperation = 3
