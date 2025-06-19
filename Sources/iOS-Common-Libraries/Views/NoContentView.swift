@@ -63,26 +63,40 @@ public struct NoContentView: View {
     public var body: some View {
         VStack {
             ContentUnavailableView {
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(size: CGSize(asSquare: 60.0))
-                    .foregroundStyle(style.tintColor)
-                    .rotationEffect(Angle.degrees(rotationAngle))
-                    .onAppear {
-                        guard animated else { return }
-                        startAnimations()
-                    }
+                if #available(iOS 18.0, macCatalyst 18.0, *) {
+                    formattedImage()
+                        .symbolRenderingMode(.hierarchical)
+                        .symbolEffect(.wiggle.byLayer.clockwise, options: .repeat(.periodic(delay: 4.0)))
+                } else {
+                    formattedImage()
+                        .rotationEffect(Angle.degrees(rotationAngle))
+                        .onAppear {
+                            guard animated else { return }
+                            startAnimations()
+                        }
+                }
                 
                 text
                     .font(.title2)
                     .bold()
+                    .padding(.bottom, 4)
             } description: {
                 Text(description ?? "")
                     .font(.caption)
             }
         }
         .padding()
+    }
+    
+    // MARK: image()
+    
+    @ViewBuilder
+    private func formattedImage() -> some View {
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(size: CGSize(asSquare: 60.0))
+            .foregroundStyle(style.tintColor)
     }
     
     // MARK: Animation
