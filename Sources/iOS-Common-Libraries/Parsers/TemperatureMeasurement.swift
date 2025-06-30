@@ -20,8 +20,7 @@ public struct TemperatureMeasurement {
     
     // MARK: - Properties
     
-    public let temperature: Float
-    public let isTemperatureInFahrenheit: Bool
+    public let temperature: Measurement<UnitTemperature>
     public let timestamp: Date?
     public let location: Location?
     
@@ -29,8 +28,7 @@ public struct TemperatureMeasurement {
     
     public init(_ data: Data) {
         guard data.count >= Self.MinSize else {
-            self.temperature = 0.0
-            self.isTemperatureInFahrenheit = false
+            self.temperature = Measurement<UnitTemperature>(value: 0.0, unit: .celsius)
             self.timestamp = nil
             self.location = nil
             return
@@ -42,8 +40,10 @@ public struct TemperatureMeasurement {
         
         let temperatureData = data.subdata(in: offset..<offset + MemoryLayout<UInt32>.size)
         offset += temperatureData.count
-        self.temperature = Float(temperatureData)
-        self.isTemperatureInFahrenheit = flags & 1 == 1
+        let temperatureValue = Float(temperatureData)
+        let isTemperatureInFahrenheit = flags & 1 == 1
+        self.temperature = Measurement<UnitTemperature>(
+            value: Double(temperatureValue), unit: isTemperatureInFahrenheit ? .fahrenheit : .celsius)
         
         let isTimestampPresent = flags & 2 == 2
         let timestampSize = 7
@@ -62,13 +62,6 @@ public struct TemperatureMeasurement {
         } else {
             self.location = nil
         }
-    }
-    
-    // MARK: API
-    
-    public func temperatureFormattedString() -> String {
-        let measurement = Measurement<UnitTemperature>(value: Double(temperature), unit: isTemperatureInFahrenheit ? .fahrenheit : .celsius)
-        return String(format: "%.2f\(measurement.unit.symbol)", measurement.value)
     }
 }
 
