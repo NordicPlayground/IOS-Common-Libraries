@@ -38,7 +38,7 @@ public struct HeartRateMeasurement {
         
         var offset = 0
         let flags = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        offset += 1
+        offset += MemoryLayout<UInt8>.size
         
         let is16BitValue = flags & 1 > 0
         sensorContact = SensorContact.fromFlags(flags)
@@ -84,11 +84,11 @@ public extension HeartRateMeasurement {
         public var description: String {
             switch self {
             case .notSupported:
-                return "Contact Not Supported"
+                return "Sensor contact not supported"
             case .supportedButNotDetected:
-                return "Contact is NOT Detected"
+                return "Sensor contact not detected"
             case .supportedAndDetected:
-                return "Contact is Detected"
+                return "Sensor contact detected"
             }
         }
         
