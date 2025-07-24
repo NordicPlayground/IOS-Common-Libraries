@@ -69,7 +69,31 @@ public struct BitField<T: Option>: Hashable, Codable, ExpressibleByArrayLiteral 
     public func has(oneOf: [T]) -> Bool {
         return oneOf.first(where: { contains($0) }) != nil
     }
-
+    
+    /**
+     BitField's value as Data bytes.
+     
+     Note that the number of bytes to clip the Data to is required. This is because not all BitField(s)
+     require the full word-size - they may even know for sure they'll use at most a single byte. It's
+     feasable for us to automagically determine the minimum number of bytes needed to represent the
+     BitField and set the size ourselves, but then, this might trigger issues down the line if the underlying
+     values are expanded. And what fit before in a single byte, now needs two. So instead, to be safe,
+     we put this responsability in the programmer (i.e. API user)'s hands.
+     
+     - parameter clippedTo: the Data will be clipped to the desired byte-size. For a single byte, ´UInt8.self´ should be used. For two bytes, ´UInt16.self´. And so on.
+     */
+    public func data<S: FixedWidthInteger>(clippedTo outputSize: S.Type) -> Data {
+        var clippedValue = S(bitField)
+        let capacity = MemoryLayout<S>.size
+        // Shamelessly stolen from CBOR's FixedWidthInteger extension
+        let bytes = withUnsafePointer(to: &clippedValue) {
+            return $0.withMemoryRebound(to: UInt8.self, capacity: capacity) {
+                return Array(UnsafeBufferPointer(start: $0, count: capacity))
+            }
+        }
+        return Data(bytes)
+    }
+    
     // MARK: Mutating API
 
     public mutating func insert(_ newMember: T) {
