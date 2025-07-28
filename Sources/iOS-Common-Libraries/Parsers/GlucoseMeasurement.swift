@@ -50,7 +50,7 @@ public struct GlucoseMeasurement {
             return Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
         }() : nil
         
-        guard flags.contains(.typeAndLocation) else { return nil }
+        guard flags.contains(.typeAndLocation) && offset + SFloatReserved.byteSize <= data.count else { return nil }
         let value = Float(asSFloat: data.subdata(in: offset..<offset+SFloatReserved.byteSize))
         offset += SFloatReserved.byteSize
         if flags.contains(.concentrationUnit) {
