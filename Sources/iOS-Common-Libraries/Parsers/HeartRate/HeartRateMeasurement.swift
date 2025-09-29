@@ -62,7 +62,7 @@ public struct HeartRateMeasurement {
         
         if rrIntervalStatus {
             var intervals = [TimeInterval]()
-            while offset + MemoryLayout<UInt16>.size < data.count {
+            while offset + MemoryLayout<UInt16>.size <= data.count {
                 let units = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
                 intervals.append(TimeInterval(units) * 1000.0 / 1024.0)
                 offset += MemoryLayout<UInt16>.size
