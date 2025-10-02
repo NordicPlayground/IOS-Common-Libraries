@@ -28,7 +28,7 @@ public struct TemperatureMeasurement {
     
     public init(_ data: Data) {
         guard data.count >= Self.MinSize else {
-            self.temperature = Measurement<UnitTemperature>(value: 0.0, unit: .celsius)
+            self.temperature = Measurement<UnitTemperature>(value: Double.nan, unit: .celsius)
             self.timestamp = nil
             self.location = nil
             return
@@ -40,7 +40,7 @@ public struct TemperatureMeasurement {
         
         let temperatureData = data.subdata(in: offset..<offset + MemoryLayout<UInt32>.size)
         offset += temperatureData.count
-        let temperatureValue = Float(temperatureData)
+        let temperatureValue = Double(temperatureData)
         let isTemperatureInFahrenheit = flags & 1 == 1
         self.temperature = Measurement<UnitTemperature>(
             value: Double(temperatureValue), unit: isTemperatureInFahrenheit ? .fahrenheit : .celsius)
