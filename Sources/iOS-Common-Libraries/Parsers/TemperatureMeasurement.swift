@@ -71,19 +71,19 @@ public extension TemperatureMeasurement {
     
     enum Location: Int, Codable, CustomStringConvertible {
         case armpit = 1
-        case leftEar, leftFinger, body, rightEar, rightFinger, tract, mouth, rectum, toe, tympanum
+        case body, ear, finger, gastrointestinal, mouth, rectum, toe, tympanum
         
         public var description: String {
             switch self {
             case .armpit:
                 return "Armpit"
-            case .leftEar, .rightEar:
+            case .ear:
                 return "Ear"
-            case .leftFinger, .rightFinger:
+            case .finger:
                 return "Finger"
             case .body:
                 return "Body - General"
-            case .tract:
+            case .gastrointestinal:
                 return "Gastro - Intestinal Tract"
             case .mouth:
                 return "Mouth"

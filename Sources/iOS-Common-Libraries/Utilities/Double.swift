@@ -38,5 +38,5 @@ public extension Double {
 }
 
 private enum ReservedDoubleValues: UInt32 {
-    case nan = 0x007FFFFFFF
+    case nan = 0x007FFFFF
 }
