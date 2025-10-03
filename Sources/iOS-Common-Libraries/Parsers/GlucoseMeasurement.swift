@@ -21,7 +21,7 @@ public struct GlucoseMeasurement {
     public let sequenceNumber: Int
     public let timestamp: Date
     public let timeOffset: Measurement<UnitDuration>?
-    public let measurement: Measurement<UnitConcentrationMass>
+    public let measurement: Measurement<UnitConcentrationMass>?
     public let status: BitField<GlucoseMeasurement.Status>?
     
     private let sensorCode: RegisterValue
@@ -50,20 +50,27 @@ public struct GlucoseMeasurement {
             return Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
         }() : nil
         
-        guard flags.contains(.typeAndLocation) && offset + SFloatReserved.byteSize <= data.count else { return nil }
-        let value = Float(asSFloat: data.subdata(in: offset..<offset+SFloatReserved.byteSize))
-        offset += SFloatReserved.byteSize
-        if flags.contains(.concentrationUnit) {
-            measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
+        if flags.contains(.typeAndLocation) && offset + SFloatReserved.byteSize <= data.count {
+            let value = Float(asSFloat: data.subdata(in: offset..<offset+SFloatReserved.byteSize))
+            offset += SFloatReserved.byteSize
+            if flags.contains(.concentrationUnit) {
+                measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
+            } else {
+                measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
+            }
         } else {
-            measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
+            measurement = nil
         }
         
-        guard data.canRead(UInt8.self, atOffset: offset) else { return nil }
-        let typeAndLocation = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        offset += MemoryLayout<UInt8>.size
-        self.locationCode = RegisterValue((typeAndLocation & 0xF0) >> 4)
-        self.sensorCode = RegisterValue(typeAndLocation & 0x0F)
+        if data.canRead(UInt8.self, atOffset: offset) {
+            let typeAndLocation = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+            offset += MemoryLayout<UInt8>.size
+            self.locationCode = RegisterValue((typeAndLocation & 0xF0) >> 4)
+            self.sensorCode = RegisterValue(typeAndLocation & 0x0F)
+        } else {
+            self.locationCode = 0
+            self.sensorCode = 0
+        }
         
         status = flags.contains(.statusAnnunciationPresent) && data.canRead(UInt16.self, atOffset: offset) ? {
             let statusCode = RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self))
@@ -118,7 +125,7 @@ public extension GlucoseMeasurement {
 
 // MARK: - bloodGramsPerMole
 
-extension Double {
+public extension Double {
     
     static let bloodGramsPerMole = 64.458
 }
