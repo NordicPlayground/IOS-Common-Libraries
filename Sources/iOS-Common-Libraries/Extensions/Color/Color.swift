@@ -138,7 +138,7 @@ public extension Color {
     }
     
     static var universalAccentColor: Color {
-        #if os(OSX)
+        #if os(OSX) || targetEnvironment(macCatalyst)
         return .accentColor
         #elseif os(iOS)
         return .nordicBlue
