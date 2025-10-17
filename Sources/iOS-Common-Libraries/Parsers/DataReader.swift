@@ -24,7 +24,7 @@ public class DataReader {
             throw ParsingError.invalidSize(actualSize: data.count, expectedSize: offset + SFloatReserved.byteSize)
         }
         defer { offset += size }
-        return data.subdata(in: offset..<offset + MemoryLayout<UInt32>.size)
+        return data.subdata(in: offset..<offset + size)
     }
     
     public func readSFloat() throws -> Float {
