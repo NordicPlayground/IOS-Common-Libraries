@@ -19,6 +19,14 @@ public class DataReader {
         return offset + size <= data.count
     }
     
+    public func subdata(_ size: Int) throws -> Data {
+        guard hasData(size) else {
+            throw ParsingError.invalidSize(actualSize: data.count, expectedSize: offset + SFloatReserved.byteSize)
+        }
+        defer { offset += size }
+        return data.subdata(in: offset..<offset + MemoryLayout<UInt32>.size)
+    }
+    
     public func readSFloat() throws -> Float {
         guard hasData(SFloatReserved.byteSize) else {
             throw ParsingError.invalidSize(actualSize: data.count, expectedSize: offset + SFloatReserved.byteSize)
@@ -38,5 +46,10 @@ public class DataReader {
     public func read<T: FixedWidthInteger>(_ type: T.Type) throws -> T {
         defer { offset += MemoryLayout<T>.size }
         return try data.read(fromOffset: offset)
+    }
+    
+    public func readInt<T: FixedWidthInteger>(_ type: T.Type) throws -> Int {
+        let value: T = try read(T.self)
+        return Int(value)
     }
 }
