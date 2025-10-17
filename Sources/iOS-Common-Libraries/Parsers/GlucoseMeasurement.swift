@@ -45,7 +45,7 @@ public struct GlucoseMeasurement {
         offset += Date.DataSize
         
         timeOffset = flags.contains(.timeOffset) && data.canRead(UInt16.self, atOffset: offset) ? {
-            let timeOffset = data.littleEndianBytes(atOffset: offset, as: Int16.self)
+            let timeOffset = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
             offset += MemoryLayout<UInt16>.size
             return Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
         }() : nil
