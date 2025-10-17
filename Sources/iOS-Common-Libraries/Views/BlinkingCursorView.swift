@@ -12,6 +12,10 @@ import SwiftUI
 
 public struct BlinkingCursorView: View {
     
+    // MARK: init
+    
+    public init() {}
+    
     // MARK: view
     
     public var body: some View {
