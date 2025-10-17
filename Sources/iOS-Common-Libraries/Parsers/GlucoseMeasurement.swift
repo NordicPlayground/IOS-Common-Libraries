@@ -35,7 +35,7 @@ public struct GlucoseMeasurement {
         let featureFlags = UInt(try reader.read(UInt8.self))
         let flags = BitField<GlucoseMeasurement.Flags>(featureFlags)
         
-        self.sequenceNumber = Int(try reader.read(UInt16.self))
+        self.sequenceNumber = try reader.readInt(UInt16.self)
         self.timestamp = try reader.readDate()
         
         timeOffset = flags.contains(.timeOffset) ? Measurement<UnitDuration>(value: Double(try reader.read(UInt16.self)), unit: .minutes) : nil
