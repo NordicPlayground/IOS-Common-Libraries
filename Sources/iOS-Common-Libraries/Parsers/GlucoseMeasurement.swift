@@ -29,42 +29,29 @@ public struct GlucoseMeasurement {
     
     // MARK: init
     
-    public init?(_ data: Data) {
-        guard data.canRead(UInt8.self, atOffset: 0) else { return nil }
-        let featureFlags = UInt(data.littleEndianBytes(atOffset: 0, as: UInt8.self))
+    public init(_ data: Data) throws {
+        let reader = DataReader(data: data)
+
+        let featureFlags = UInt(try reader.read(UInt8.self))
         let flags = BitField<GlucoseMeasurement.Flags>(featureFlags)
         
-        guard data.canRead(UInt16.self, atOffset: 1) else { return nil }
-        self.sequenceNumber = data.littleEndianBytes(atOffset: 1, as: UInt16.self)
-        var offset = MemoryLayout<UInt8>.size + MemoryLayout<UInt16>.size
+        self.sequenceNumber = Int(try reader.read(UInt16.self))
+        self.timestamp = try reader.readDate()
         
-        guard data.count >= offset + Date.DataSize else { return nil }
-        let dateData = data.subdata(in: offset ..< offset + Date.DataSize)
-        guard let date = Date(dateData) else { return nil }
-        self.timestamp = date
-        offset += Date.DataSize
-        
-        timeOffset = flags.contains(.timeOffset) && data.canRead(UInt16.self, atOffset: offset) ? {
-            let timeOffset = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
-            offset += MemoryLayout<UInt16>.size
-            return Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
-        }() : nil
-        
-        if flags.contains(.typeAndLocation) && offset + SFloatReserved.byteSize <= data.count {
-            let value = Float(asSFloat: data.subdata(in: offset..<offset+SFloatReserved.byteSize))
-            offset += SFloatReserved.byteSize
+        timeOffset = flags.contains(.timeOffset) ? Measurement<UnitDuration>(value: Double(try reader.read(UInt16.self)), unit: .minutes) : nil
+
+        if flags.contains(.typeAndLocation) {
             if flags.contains(.concentrationUnit) {
-                measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
+                measurement = Measurement<UnitConcentrationMass>(value: Double(try reader.readSFloat()), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
             } else {
-                measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
+                measurement = Measurement<UnitConcentrationMass>(value: Double(try reader.readSFloat()), unit: .milligramsPerDeciliter)
             }
         } else {
             measurement = nil
         }
         
-        if flags.contains(.typeAndLocation) && data.canRead(UInt8.self, atOffset: offset) {
-            let typeAndLocation = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-            offset += MemoryLayout<UInt8>.size
+        if flags.contains(.typeAndLocation) {
+            let typeAndLocation = try reader.read(UInt8.self)
             self.locationCode = RegisterValue((typeAndLocation & 0xF0) >> 4)
             self.sensorCode = RegisterValue(typeAndLocation & 0x0F)
         } else {
@@ -72,11 +59,7 @@ public struct GlucoseMeasurement {
             self.sensorCode = 0
         }
         
-        status = flags.contains(.statusAnnunciationPresent) && data.canRead(UInt16.self, atOffset: offset) ? {
-            let statusCode = RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self))
-            offset += MemoryLayout<UInt16>.size
-            return BitField<GlucoseMeasurement.Status>(statusCode)
-        }() : nil
+        status = flags.contains(.statusAnnunciationPresent) ? BitField<GlucoseMeasurement.Status>(RegisterValue(try reader.read(UInt16.self))) : nil
     }
 }
 
