@@ -15,8 +15,12 @@ public class DataReader {
         self.data = data
     }
     
+    public func hasData(_ size: Int) -> Bool {
+        return offset + size <= data.count
+    }
+    
     public func readSFloat() throws -> Float {
-        guard data.count >= offset + SFloatReserved.byteSize else {
+        guard hasData(SFloatReserved.byteSize) else {
             throw ParsingError.invalidSize(actualSize: data.count, expectedSize: offset + SFloatReserved.byteSize)
         }
         defer { offset += SFloatReserved.byteSize }
@@ -24,7 +28,7 @@ public class DataReader {
     }
 
     public func readDate() throws -> Date {
-        guard data.count >= offset + Date.DataSize else {
+        guard hasData(Date.DataSize) else {
             throw ParsingError.invalidSize(actualSize: data.count, expectedSize: offset + Date.DataSize)
         }
         defer { offset += Date.DataSize }
