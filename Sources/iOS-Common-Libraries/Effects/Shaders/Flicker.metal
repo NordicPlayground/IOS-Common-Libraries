@@ -8,6 +8,7 @@
 //  Copyright © 2024 Nordic Semiconductor. All rights reserved.
 //
 
+#if __METAL_VERSION__ >= 240
 #include <metal_stdlib>
 using namespace metal;
 
@@ -33,3 +34,4 @@ using namespace metal;
     c.rgb *= brightness - brightnessDropPercent * cycle;
     return c;
 }
+#endif

@@ -1,11 +1,12 @@
 //
-//  File.metal
+//  Iridescence.metal
 //  iOSCommonLibraries
 //
 //  Created by Dinesh Harjani on 12/3/25.
 //  Copyright © 2025 Nordic Semiconductor. All rights reserved.
 //
 
+#if __METAL_VERSION__ >= 240
 #include <metal_stdlib>
 using namespace metal;
 
@@ -31,3 +32,4 @@ float2x2 rateOfTurn(float radians) {
 
     return color;
 }
+#endif
