@@ -12,6 +12,7 @@ import SwiftUI
 
 // MARK: - NordicDataField
 
+@available(iOS 15.0, *)
 public struct NordicDataField: View {
     
     // MARK: Properties

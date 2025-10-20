@@ -60,7 +60,7 @@ public extension Float {
 
 // MARK: - ReservedFloatValues
 
-public enum ReservedFloatValues: UInt32 {
+public enum ReservedFloatValues: UInt32, Sendable {
     case positiveINF = 0x007FFFFE
     case nan = 0x007FFFFF
     case nres = 0x00800000
@@ -72,7 +72,7 @@ public enum ReservedFloatValues: UInt32 {
 
 // MARK: - SFloatReserved
 
-public enum SFloatReserved: Int16 {
+public enum SFloatReserved: Int16, Sendable {
     case positiveINF = 0x07FE
     case nan = 0x07FF
     case nres = 0x0800

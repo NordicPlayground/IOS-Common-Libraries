@@ -14,6 +14,7 @@ using namespace metal;
 // MARK: - flicker
 
 // Source: https://www.reddit.com/r/godot/comments/mslgpu/flickering_neon_shader_for_a_comrade_better_with/?rdt=40964
+#if __METAL_VERSION__ >= 240
 [[ stitchable ]] half4 flicker(float2 position, half4 color, float2 size, float time) {
     half brightness = 1.0;
     half brightnessDropPercent = 0.35;
@@ -33,3 +34,4 @@ using namespace metal;
     c.rgb *= brightness - brightnessDropPercent * cycle;
     return c;
 }
+#endif

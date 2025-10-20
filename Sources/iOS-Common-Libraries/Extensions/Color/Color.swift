@@ -99,6 +99,7 @@ public extension Color {
     
     // MARK: Label Color(s)
     
+    @available(iOS 15.0, *)
     static var primarylabel: Color {
         #if os(OSX)
         return Color(nsColor: .labelColor)
@@ -107,6 +108,7 @@ public extension Color {
         #endif
     }
     
+    @available(iOS 15.0, *)
     static var secondarylabel: Color {
         #if os(OSX)
         return Color(nsColor: .secondaryLabelColor)
@@ -115,6 +117,7 @@ public extension Color {
         #endif
     }
 
+    @available(iOS 15.0, *)
     static var tertiarylabel: Color {
         #if os(OSX)
         return Color(nsColor: .tertiaryLabelColor)
@@ -123,6 +126,7 @@ public extension Color {
         #endif
     }
     
+    @available(iOS 15.0, *)
     static var quaternaryLabel: Color {
         #if os(OSX)
         return Color(nsColor: .quaternaryLabelColor)

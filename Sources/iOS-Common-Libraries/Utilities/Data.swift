@@ -27,7 +27,7 @@ public extension Data {
         return subdata(in: offset ..< offset + byteLength).withUnsafeBytes { Int(T(bigEndian: $0.load(as: T.self))) }
     }
     
-    private static let byteCountFormatter = ByteCountFormatter()
+    nonisolated(unsafe) private static let byteCountFormatter = ByteCountFormatter()
     func sizeString(units: ByteCountFormatter.Units = [.useAll], countStyle: ByteCountFormatter.CountStyle = .file) -> String {
         Self.byteCountFormatter.allowedUnits = units
         Self.byteCountFormatter.countStyle = .file
@@ -40,7 +40,7 @@ public extension Data {
 public extension Data {
     
     private static let PageSize = 128
-    private static let AppLog = NordicLog(category: "Data", subsystem: NordicLog.iOSCommonLibrarySubsystem)
+    nonisolated(unsafe) private static let AppLog = NordicLog(category: "Data", subsystem: NordicLog.iOSCommonLibrarySubsystem)
     
     // MARK: compressed()
     

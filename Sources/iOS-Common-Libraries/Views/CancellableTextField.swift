@@ -14,6 +14,7 @@ import SwiftUI
 /**
  Stolen from: https://www.appcoda.com/swiftui-search-bar/
  */
+@available(iOS 15.0, *)
 public struct CancellableTextField: View {
     
     // MARK: Icon

@@ -132,6 +132,7 @@ private struct OnceOnly: ViewModifier {
 
 // MARK: - taskOnce()
 
+@available(iOS 15.0, *)
 public extension View {
     
     func taskOnce(_ asyncAction: @escaping () async -> Void) -> some View {
@@ -139,6 +140,7 @@ public extension View {
     }
 }
 
+@available(iOS 15.0, *)
 private struct TaskOnceOnly: ViewModifier {
     
     @State private var doneAlready = false

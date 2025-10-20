@@ -18,6 +18,7 @@ float2x2 rateOfTurn(float radians) {
 
 // MARK: - iridescent
 
+#if __IPHONE_17_0
 // Source: https://www.shadertoy.com/view/MlcGWr
 [[ stitchable ]] half4 iridescence(float2 position, half4 color, float2 size, float time) {
     half t = time / 3. + 5.; // slow down time
@@ -31,3 +32,4 @@ float2x2 rateOfTurn(float radians) {
 
     return color;
 }
+#endif
