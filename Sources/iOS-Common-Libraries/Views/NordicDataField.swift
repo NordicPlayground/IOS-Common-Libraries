@@ -48,11 +48,11 @@ public struct NordicDataField: View {
                 .padding(4)
                 #if os(iOS) || targetEnvironment(macCatalyst)
                 .background(Color(.systemGray6))
+                .textInputAutocapitalization(.never)
                 #else
                 .background(Color.secondarySystemBackground)
                 #endif
                 .cornerRadius(8)
-                .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .onChange(of: dataString) { newString in
                     switch selectedParser {
