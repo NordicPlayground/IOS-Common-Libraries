@@ -103,7 +103,11 @@ public extension Color {
         #if os(OSX)
         return Color(nsColor: .labelColor)
         #elseif os(iOS)
-        return Color(uiColor: UIColor.label)
+        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+            return Color(uiColor: UIColor.label)
+        } else {
+            return Color.primary
+        }
         #endif
     }
     
@@ -111,7 +115,11 @@ public extension Color {
         #if os(OSX)
         return Color(nsColor: .secondaryLabelColor)
         #elseif os(iOS)
-        return Color(uiColor: UIColor.secondaryLabel)
+        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+            return Color(uiColor: UIColor.secondaryLabel)
+        } else {
+            return Color.secondary
+        }
         #endif
     }
 
@@ -119,7 +127,11 @@ public extension Color {
         #if os(OSX)
         return Color(nsColor: .tertiaryLabelColor)
         #elseif os(iOS)
-        return Color(uiColor: UIColor.tertiaryLabel)
+        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+            return Color(uiColor: UIColor.tertiaryLabel)
+        } else {
+            return Color.secondary.opacity(0.9)
+        }
         #endif
     }
     
@@ -127,7 +139,11 @@ public extension Color {
         #if os(OSX)
         return Color(nsColor: .quaternaryLabelColor)
         #elseif os(iOS)
-        return Color(uiColor: UIColor.quaternaryLabel)
+        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+            return Color(uiColor: UIColor.quaternaryLabel)
+        } else {
+            return Color.secondary.opacity(0.7)
+        }
         #endif
     }
     
