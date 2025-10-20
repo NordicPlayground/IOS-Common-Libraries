@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - TextFieldAlertModifier
 
+@available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *)
 public struct TextFieldAlertModifier: ViewModifier {
     
     // MARK: Private Properties
@@ -53,6 +54,7 @@ public struct TextFieldAlertModifier: ViewModifier {
 
 // MARK: View
 
+@available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *)
 public extension View {
     
     func textFieldAlert(title: String, message: String,
