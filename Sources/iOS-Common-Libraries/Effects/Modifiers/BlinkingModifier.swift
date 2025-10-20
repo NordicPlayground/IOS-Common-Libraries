@@ -33,7 +33,7 @@ public struct BlinkingView<Content: View>: View {
         content()
             .opacity(blink ? Constants.maxBlinkOpacity : Constants.minBlinkOpacity)
             .scaleEffect(blink ? Constants.maxBlinkScale : Constants.minBlinkScale)
-            .animation(Animation.linear(duration: Constants.duration).repeatForever(autoreverses: true))
+            .animation(Animation.linear(duration: Constants.duration).repeatForever(autoreverses: true), value: blink)
             .onAppear {
                 withAnimation {
                     blink = true
