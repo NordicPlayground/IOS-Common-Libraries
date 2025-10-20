@@ -20,7 +20,7 @@ public struct BlinkingCursorView: View {
     
     public var body: some View {
         Text("█")
-            .foregroundStyle(Color.universalAccentColor)
+            .foregroundColor(Color.universalAccentColor)
             .glow()
             .blink()
     }
