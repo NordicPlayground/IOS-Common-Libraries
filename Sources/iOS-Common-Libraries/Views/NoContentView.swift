@@ -63,7 +63,7 @@ public struct NoContentView: View {
     public var body: some View {
         VStack {
             ContentUnavailableView {
-                if #available(iOS 18.0, macCatalyst 18.0, *) {
+                if #available(iOS 18.0, macCatalyst 18.0, macOS 15.0, *) {
                     formattedImage()
                         .symbolRenderingMode(.hierarchical)
                         .symbolEffect(.wiggle.byLayer.clockwise, options: .repeat(.periodic(delay: 4.0)))
