@@ -37,6 +37,7 @@ public extension Data {
 
 // MARK: - Compression
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public extension Data {
     
     private static let PageSize = 128

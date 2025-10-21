@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - SourceCodeLinkView
 
+@available(iOS 14.0, macCatalyst 14.0, *)
 public struct SourceCodeLinkView: View {
     
     // MARK: Private Properties

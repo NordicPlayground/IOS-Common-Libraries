@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - DevZoneLinkView
 
+@available(iOS 14.0, macCatalyst 14.0, *)
 public struct DevZoneLinkView: View {
     
     // MARK: init

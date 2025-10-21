@@ -17,7 +17,6 @@ public final class Network {
     
     // MARK: - Properties
     
-    private lazy var logger = NordicLog(Self.self, subsystem: NordicLog.iOSCommonLibrarySubsystem)
     private lazy var imageCache = Cache<URL, Image>()
     private lazy var session = URLSession(configuration: .multiPathEnabled)
     
@@ -50,7 +49,7 @@ public extension Network {
     
     func isReachable() -> Bool {
         guard let reachability = reachability else {
-            logger.error("\(#function): Nil reachability property.")
+            logError("\(#function): Nil reachability property.")
             return false
         }
         
@@ -62,7 +61,7 @@ public extension Network {
         let canConnectAutomatically = flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic)
         let canConnectWithoutIntervention = canConnectAutomatically && !flags.contains(.interventionRequired)
         let result = isReachable && (!connectionRequired || canConnectWithoutIntervention)
-        logger.debug("\(#function): \(result)")
+        logDebug("\(#function): \(result)")
         return isReachable && (!connectionRequired || canConnectWithoutIntervention)
     }
     
@@ -70,9 +69,9 @@ public extension Network {
     
     func perform(_ request: HTTPRequest) -> AnyPublisher<Data, Error> {
         let sessionRequestPublisher = session.dataTaskPublisher(for: request)
-            .tryMap() { [logger] element -> Data in
+            .tryMap() { [unowned self] element -> Data in
                 #if DEBUG
-                logger.debug("\(element.response)")
+                logDebug("\(element.response)")
                 #endif
                 
                 guard let httpResponse = element.response as? HTTPURLResponse else {
@@ -87,7 +86,7 @@ public extension Network {
                 default: // Assume Error.
                     if let responseDataAsString = String(data: element.data, encoding: .utf8) {
                         #if DEBUG
-                        logger.debug("\(request): \(responseDataAsString)")
+                        logDebug("\(request): \(responseDataAsString)")
                         #endif
                         throw URLError(.cannotParseResponse)
                     } else {
@@ -169,6 +168,23 @@ public extension Network {
                 return image
             }
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: Logging
+
+internal extension Network {
+    
+    func logDebug(_ string: String) {
+        guard #available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *) else { return }
+        let logger = NordicLog(Self.self, subsystem: NordicLog.iOSCommonLibrarySubsystem)
+        logger.debug(string)
+    }
+    
+    func logError(_ string: String) {
+        guard #available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *) else { return }
+        let logger = NordicLog(Self.self, subsystem: NordicLog.iOSCommonLibrarySubsystem)
+        logger.error(string)
     }
 }
 

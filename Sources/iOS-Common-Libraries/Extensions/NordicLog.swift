@@ -16,6 +16,7 @@ import UIKit
 
 // MARK: - NordicLog Definition
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public struct NordicLog: Sendable {
 
     static let iOSCommonLibrarySubsystem = "com.nordicsemi.iOS-Common-Libraries"
@@ -47,7 +48,11 @@ public struct NordicLog: Sendable {
         self.subsystem = subsystem
         logger = Logger(subsystem: subsystem, category: category)
         poiLog = OSLog(subsystem: subsystem, category: .pointsOfInterest)
-        mxLog = MXMetricManager.makeLogHandle(category: category)
+        if #available(macOS 12.0, *) {
+            mxLog = MXMetricManager.makeLogHandle(category: category)
+        } else {
+            mxLog = poiLog
+        }
         self.delegate = delegate
     }
     
@@ -76,6 +81,7 @@ public struct NordicLog: Sendable {
 
 // MARK: - Delegate
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public extension NordicLog {
     
     protocol Delegate: Sendable {
@@ -86,6 +92,7 @@ public extension NordicLog {
 
 // MARK: - Logging API Extension
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public extension NordicLog {
 
     @inline(__always) func info(_ line: String) {
@@ -109,6 +116,7 @@ public extension NordicLog {
 
 // MARK: - Signpost API Extension
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public extension NordicLog {
 
     @inline(__always) private func mxEvent(name: StaticString, line: String) {
