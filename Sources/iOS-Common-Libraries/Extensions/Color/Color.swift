@@ -35,6 +35,7 @@ public extension Color {
     // MARK: uiColor
     
     #if os(iOS) || targetEnvironment(macCatalyst)
+    @available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
     var uiColor: UIColor {
         UIColor(self)
     }
@@ -101,9 +102,13 @@ public extension Color {
     
     static var primarylabel: Color {
         #if os(OSX)
-        return Color(nsColor: .labelColor)
+        if #available(macOS 12.0, *) {
+            return Color(nsColor: .labelColor)
+        } else {
+            return Color.primary
+        }
         #elseif os(iOS)
-        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+        if #available(iOS 15.0, macCatalyst 15.0, *) {
             return Color(uiColor: UIColor.label)
         } else {
             return Color.primary
@@ -113,9 +118,13 @@ public extension Color {
     
     static var secondarylabel: Color {
         #if os(OSX)
-        return Color(nsColor: .secondaryLabelColor)
+        if #available(macOS 12.0, *) {
+            return Color(nsColor: .secondaryLabelColor)
+        } else {
+            return Color.secondary
+        }
         #elseif os(iOS)
-        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+        if #available(iOS 15.0, macCatalyst 15.0, *) {
             return Color(uiColor: UIColor.secondaryLabel)
         } else {
             return Color.secondary
@@ -125,9 +134,13 @@ public extension Color {
 
     static var tertiarylabel: Color {
         #if os(OSX)
-        return Color(nsColor: .tertiaryLabelColor)
+        if #available(macOS 12.0, *) {
+            return Color(nsColor: .tertiaryLabelColor)
+        } else {
+            return Color.secondary.opacity(0.9)
+        }
         #elseif os(iOS)
-        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+        if #available(iOS 15.0, macCatalyst 15.0, *) {
             return Color(uiColor: UIColor.tertiaryLabel)
         } else {
             return Color.secondary.opacity(0.9)
@@ -137,9 +150,13 @@ public extension Color {
     
     static var quaternaryLabel: Color {
         #if os(OSX)
-        return Color(nsColor: .quaternaryLabelColor)
+        if #available(macOS 12.0, *) {
+            return Color(nsColor: .quaternaryLabelColor)
+        } else {
+            return Color.secondary.opacity(0.7)
+        }
         #elseif os(iOS)
-        if #available(iOS 15.0, macCatalyst 15.0, macOS 12.0, *) {
+        if #available(iOS 15.0, macCatalyst 15.0, *) {
             return Color(uiColor: UIColor.quaternaryLabel)
         } else {
             return Color.secondary.opacity(0.7)

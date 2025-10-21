@@ -42,7 +42,10 @@ public enum Constant {
     }()
     
     static public var isLowPowerMode: Bool {
-        ProcessInfo.processInfo.isLowPowerModeEnabled
+        guard #available(macOS 12.0, *) else {
+            return false
+        }
+        return ProcessInfo.processInfo.isLowPowerModeEnabled
     }
     
     static public let isRunningOnSimulator: Bool = {

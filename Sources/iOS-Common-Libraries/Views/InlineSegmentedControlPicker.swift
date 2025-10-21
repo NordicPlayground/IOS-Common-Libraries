@@ -11,6 +11,7 @@ import SwiftUI
 
 // MARK: - InlineSegmentedControlPicker
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public struct InlineSegmentedControlPicker<T: Hashable & Equatable & CustomStringConvertible>: View {
     
     // MARK: Properties

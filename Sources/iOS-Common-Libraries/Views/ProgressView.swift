@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  ProgressView.swift
 //  iOSCommonLibraries
 //
 //  Created by Dinesh Harjani on 17/12/24.
@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+// MARK: - ProgressView
+
+@available(iOS 14.0, macCatalyst 14.0, *)
 public extension ProgressView {
 
     func fixedCircularProgressView() -> some View {

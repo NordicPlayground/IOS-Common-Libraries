@@ -3,12 +3,14 @@
 //  iOS-Common-Libraries
 //
 //  Created by Dinesh Harjani on 22/5/24.
+//  Copyright © 2024 Nordic Semiconductor. All rights reserved.
 //
 
 import SwiftUI
 
 // MARK: - PipelineView
 
+@available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
 public struct PipelineView<Stage: PipelineStage>: View {
     
     private let stage: Stage
