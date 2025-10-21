@@ -16,7 +16,7 @@ import UIKit
 
 // MARK: - NordicLog Definition
 
-public struct NordicLog {
+public struct NordicLog: Sendable {
 
     static let iOSCommonLibrarySubsystem = "com.nordicsemi.iOS-Common-Libraries"
     
@@ -78,7 +78,7 @@ public struct NordicLog {
 
 public extension NordicLog {
     
-    protocol Delegate {
+    protocol Delegate: Sendable {
         func submitted(line: String, from category: String, subsystem: String,
                        as type: OSLogType)
     }
