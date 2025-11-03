@@ -65,11 +65,14 @@ public extension Network {
         return isReachable && (!connectionRequired || canConnectWithoutIntervention)
     }
     
-    // MARK: - HTTPRequest
+    // MARK: perform(_:HTTPRequest)
     
-    func perform(_ request: HTTPRequest) -> AnyPublisher<Data, Error> {
+    /**
+     - Returns: a ``NetworkResponse`` if the task completes, returning a valid ``HTTPURLResponse`` whose status code abides by the 2__ prefix. Any other status code will be resolved by throwing a ``URLError``.
+     */
+    func perform(_ request: HTTPRequest) -> AnyPublisher<NetworkResponse, Error> {
         let sessionRequestPublisher = session.dataTaskPublisher(for: request)
-            .tryMap() { [unowned self] element -> Data in
+            .tryMap() { [unowned self] element -> NetworkResponse in
                 #if DEBUG
                 logDebug("\(element.response)")
                 #endif
@@ -79,8 +82,8 @@ public extension Network {
                 }
                 
                 switch httpResponse.statusCode {
-                case 200...299: // Success.
-                    return element.data
+                case 200...299: // Successful Response.
+                    return NetworkResponse(code: httpResponse.statusCode, data: element.data)
                 case 401:
                     throw URLError(.userAuthenticationRequired)
                 default: // Assume Error.
@@ -98,27 +101,29 @@ public extension Network {
             .eraseToAnyPublisher()
         
         return getReachabilityPublisher()
-            .flatMap { _ -> AnyPublisher<Data, Error> in
+            .flatMap { _ -> AnyPublisher<NetworkResponse, Error> in
                 return sessionRequestPublisher
             }
             .eraseToAnyPublisher()
     }
     
+    // MARK: perform<T>(_:HTTPRequest)
+    
     func perform<T: Codable>(_ request: HTTPRequest, responseType: T.Type = T.self) -> AnyPublisher<T, Error> {
         return perform(request)
-            .flatMap { data -> AnyPublisher<T, Error> in
+            .flatMap { (response: NetworkResponse) -> AnyPublisher<T, Error> in
                 let decoder = JSONDecoder()
-                if let response = try? decoder.decode(T.self, from: data) {
+                if let response = try? decoder.decode(T.self, from: response.data) {
                     return Just(response).setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 }
 
                 do {
-                    let errorResponse = try decoder.decode(BasicHTTPResponse.self, from: data)
+                    let errorResponse = try decoder.decode(BasicHTTPResponse.self, from: response.data)
                     return Fail(error: errorResponse)
                         .eraseToAnyPublisher()
                 } catch (let error) {
-                    guard let stringResponse = String(data: data, encoding: .utf8) else {
+                    guard let stringResponse = String(data: response.data, encoding: .utf8) else {
                         return Fail(error: error)
                             .eraseToAnyPublisher()
                     }
@@ -141,6 +146,8 @@ public extension Network {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    // MARK: downloadImage(for:)
     
     func downloadImage(for url: URL) -> AnyPublisher<Image?, Never> {
         if let cachedImage = imageCache[url] {
