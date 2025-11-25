@@ -43,7 +43,6 @@ public extension Network {
                 }
                 return true
             }
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -97,7 +96,6 @@ public extension Network {
                     }
                 }
             }
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return getReachabilityPublisher()
@@ -143,7 +141,6 @@ public extension Network {
                 }
                 throw error
             }
-            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -152,7 +149,6 @@ public extension Network {
     func downloadImage(for url: URL) -> AnyPublisher<Image?, Never> {
         if let cachedImage = imageCache[url] {
             return Just(cachedImage)
-                .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
 
@@ -169,7 +165,6 @@ public extension Network {
                 return image
             }
             .replaceError(with: nil)
-            .receive(on: DispatchQueue.main)
             .map { [imageCache] image in
                 imageCache[url] = image
                 return image
