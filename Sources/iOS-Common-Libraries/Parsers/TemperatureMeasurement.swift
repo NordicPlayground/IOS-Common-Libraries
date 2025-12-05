@@ -26,42 +26,15 @@ public struct TemperatureMeasurement {
     
     // MARK: - Init
     
-    public init(_ data: Data) {
-        guard data.count >= Self.MinSize else {
-            self.temperature = Measurement<UnitTemperature>(value: Double.nan, unit: .celsius)
-            self.timestamp = nil
-            self.location = nil
-            return
-        }
+    public init(_ data: Data) throws {
+        let reader = DataReader(data: data)
         
-        var offset = 0
-        let flags = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        offset += 1
+        let featureFlags = UInt(try reader.read(UInt8.self))
+        let flagsRegister = BitField<TemperatureFlag>(featureFlags)
         
-        let temperatureData = data.subdata(in: offset..<offset + MemoryLayout<UInt32>.size)
-        offset += temperatureData.count
-        let temperatureValue = Double(temperatureData)
-        let isTemperatureInFahrenheit = flags & 1 == 1
-        self.temperature = Measurement<UnitTemperature>(
-            value: Double(temperatureValue), unit: isTemperatureInFahrenheit ? .fahrenheit : .celsius)
-        
-        let isTimestampPresent = flags & 2 == 2
-        let timestampSize = 7
-        if isTimestampPresent, data.count >= offset + timestampSize {
-            let timestampData = data.subdata(in: offset..<offset+timestampSize)
-            offset += timestampSize
-            self.timestamp = Date(timestampData)
-        } else {
-            self.timestamp = nil
-        }
-        
-        let isSensorLocationPresent = flags & 4 == 4
-        if isSensorLocationPresent, data.count >= offset + MemoryLayout<UInt8>.size {
-            let sensor = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-            self.location = Location(rawValue: sensor)
-        } else {
-            self.location = nil
-        }
+        self.temperature = Measurement<UnitTemperature>(value: Double(try reader.subdata(MemoryLayout<UInt32>.size)), unit: flagsRegister.contains(.fahrenheit) ? .fahrenheit : .celsius)
+        self.timestamp = flagsRegister.contains(.timestamp) ? try reader.read() : nil
+        self.location = flagsRegister.contains(.location) ? Location(rawValue: try reader.read(UInt8.self)) : nil
     }
 }
 

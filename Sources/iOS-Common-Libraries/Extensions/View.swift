@@ -82,6 +82,36 @@ public extension View {
         return self
     }
     
+    func setupTranslucentBackground() -> some View {
+        #if os(iOS)
+        let navBarAppearance = UINavigationBarAppearance()
+        let navigationBar = UINavigationBar.appearance()
+        
+        navigationBar.barStyle = .default
+        
+        navigationBar.isTranslucent = true
+        navigationBar.prefersLargeTitles = true
+        
+        navBarAppearance.configureWithTransparentBackground()
+        
+        navigationBar.compactAppearance = navBarAppearance
+        navigationBar.standardAppearance = navBarAppearance
+        navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        if #unavailable(iOS 26.0) {
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: UIColor(.nordicBlue), dark: UIColor.white)]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: UIColor(.nordicBlue), dark: UIColor.white)]
+            navigationBar.tintColor = UIColor(.nordicBlue)
+            
+            return self.tint(Color(UIColor.dynamicColor(light: UIColor(.nordicBlue), dark: UIColor.white)))
+                .setAccent(Color(UIColor.dynamicColor(light: UIColor(.nordicBlue), dark: UIColor.white)))
+        }
+        return self
+        #else
+        self
+        #endif
+    }
+
     // MARK: - NavigationView
     
     @ViewBuilder
@@ -105,6 +135,20 @@ public extension View {
         #if os(iOS)
             .autocapitalization(.none)
         #endif
+    }
+}
+
+// MARK: - dynamicColor()
+
+extension UIColor {
+    static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { trait in
+                trait.userInterfaceStyle == .dark ? dark : light
+            }
+        } else {
+            return light
+        }
     }
 }
 

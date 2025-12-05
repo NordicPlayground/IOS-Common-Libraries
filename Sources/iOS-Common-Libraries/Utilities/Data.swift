@@ -17,6 +17,14 @@ public extension Data {
         return offset + MemoryLayout<T>.size <= count
     }
     
+    func littleEndianBytesUInt16(atOffset offset: Int = 0) -> UInt16 {
+        let byteLength = MemoryLayout<UInt16>.size
+        let subdata = self.subdata(in: offset..<offset + byteLength)
+        return subdata.withUnsafeBytes {
+            $0.load(as: UInt16.self).littleEndian
+        }
+    }
+    
     func littleEndianBytes<T: FixedWidthInteger>(atOffset offset: Int = 0, as: T.Type) -> Int {
         let byteLength = MemoryLayout<T>.size
         return subdata(in: offset ..< offset + byteLength).withUnsafeBytes { Int($0.load(as: T.self)) }

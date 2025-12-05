@@ -123,14 +123,14 @@ public struct BitField<T: Option>: Hashable, Codable, ExpressibleByArrayLiteral 
         bitField = bitField ^ member.bitwiseValue
     }
     
+    public func bitsetMembers() -> [T] {
+        T.allCases.filter({ contains($0) })
+    }
+    
     // MARK: Private
     
     private func isBitSet(_ bitwiseValue: RegisterValue) -> Bool {
         return bitField & bitwiseValue == bitwiseValue
-    }
-    
-    private func bitsetMembers() -> [T] {
-        T.allCases.filter({ contains($0) })
     }
 }
 
